@@ -1,0 +1,34 @@
+.meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacers-dp24);
+    padding: var(--spacers-dp16);
+    background: var(--colors-grey100);
+    border-bottom: 1px solid var(--colors-grey300);
+}
+
+.meta > div {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.label {
+    font-size: 12px;
+    color: var(--colors-grey700);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.alarmCell {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.verified {
+    display: flex;
+    flex-direction: column;
+    font-size: 12px;
+    color: var(--colors-grey800);
+}

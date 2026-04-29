@@ -1,0 +1,151 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: i18next-conv\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"POT-Creation-Date: 2026-04-29T15:17:43.719Z\n"
+"PO-Revision-Date: 2026-04-29T15:17:43.719Z\n"
+
+msgid "Upload report"
+msgstr "Upload report"
+
+msgid "Failed to parse the report file"
+msgstr "Failed to parse the report file"
+
+msgid "Fridge-tag report viewer"
+msgstr "Fridge-tag report viewer"
+
+msgid ""
+"Upload a Berlinger Fridge-tag text report to inspect the daily temperature "
+"history, alarms, and device configuration."
+msgstr ""
+"Upload a Berlinger Fridge-tag text report to inspect the daily temperature "
+"history, alarms, and device configuration."
+
+msgid "Choose a Fridge-tag report"
+msgstr "Choose a Fridge-tag report"
+
+msgid "Clear"
+msgstr "Clear"
+
+msgid "Parsing…"
+msgstr "Parsing…"
+
+msgid "Could not parse report"
+msgstr "Could not parse report"
+
+msgid "No report loaded"
+msgstr "No report loaded"
+
+msgid "Choose a .txt file exported from a Berlinger Fridge-tag device to begin."
+msgstr "Choose a .txt file exported from a Berlinger Fridge-tag device to begin."
+
+msgid "Certificate & signatures"
+msgstr "Certificate & signatures"
+
+msgid "Issuer"
+msgstr "Issuer"
+
+msgid "Owner"
+msgstr "Owner"
+
+msgid "Valid from"
+msgstr "Valid from"
+
+msgid "Version"
+msgstr "Version"
+
+msgid "Lot"
+msgstr "Lot"
+
+msgid "Public key"
+msgstr "Public key"
+
+msgid "Signatures"
+msgstr "Signatures"
+
+msgid "Certificate"
+msgstr "Certificate"
+
+msgid "Data"
+msgstr "Data"
+
+msgid "Device & configuration"
+msgstr "Device & configuration"
+
+msgid "Device"
+msgstr "Device"
+
+msgid "Firmware"
+msgstr "Firmware"
+
+msgid "Sensors"
+msgstr "Sensors"
+
+msgid "Serial"
+msgstr "Serial"
+
+msgid "PCB"
+msgstr "PCB"
+
+msgid "CID"
+msgstr "CID"
+
+msgid "Zone"
+msgstr "Zone"
+
+msgid "Alarm thresholds"
+msgstr "Alarm thresholds"
+
+msgid "Hot · level {{level}}"
+msgstr "Hot · level {{level}}"
+
+msgid "Cold · level {{level}}"
+msgstr "Cold · level {{level}}"
+
+msgid "Daily history"
+msgstr "Daily history"
+
+msgid "Activated"
+msgstr "Activated"
+
+msgid "Report created"
+msgstr "Report created"
+
+msgid "Days recorded"
+msgstr "Days recorded"
+
+msgid "Day"
+msgstr "Day"
+
+msgid "Date"
+msgstr "Date"
+
+msgid "Min"
+msgstr "Min"
+
+msgid "Max"
+msgstr "Max"
+
+msgid "Avg"
+msgstr "Avg"
+
+msgid "Min @"
+msgstr "Min @"
+
+msgid "Max @"
+msgstr "Max @"
+
+msgid "Alarms"
+msgstr "Alarms"
+
+msgid "Verified"
+msgstr "Verified"
+
+msgid "No daily records in this report"
+msgstr "No daily records in this report"
+
+msgid "OK"
+msgstr "OK"

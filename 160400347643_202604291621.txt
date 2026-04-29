@@ -1,0 +1,819 @@
+Device: Q-tag Fridge-tag 2
+Vers: 0.5
+Fw Vers: 4.0p1o
+Sensor: 1
+Conf:
+ Serial: 160400347643
+ PCB: BG0245100251
+ CID: 62000007
+ Lot: 1792_20_08
+ Zone: 0.00
+ Measurement delay: 10
+ Moving Avrg: 1
+ User Alarm Config: 0
+ User Clock Config: 1
+ Alarm Indication: 0
+ Temp unit: C
+ Alarm:
+  0:
+   T AL: -0.5, t AL: 60
+  1:
+   T AL: +8.0, t AL: 600
+ Int Sensor:
+  Timeout: 1, Offset: +0.0
+ Report history length: 60
+ Det Report: 19
+ Use ext devices: 0
+ Test Res: 1, Test TS: 2025-05-15 15:23
+Hist:
+ TS Actv: 2026-01-20 11:51
+ TS Report Creation: 2026-04-29 16:21
+ 1:
+  Date: 2026-04-29
+  Min T: +21.8, TS Min T: 09:49
+  Max T: +23.5, TS Max T: 15:49
+  Avrg T: +22.4
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 974, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 2:
+  Date: 2026-04-28
+  Min T: +22.2, TS Min T: 10:29
+  Max T: +24.6, TS Max T: 17:22
+  Avrg T: +22.8
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 3:
+  Date: 2026-04-27
+  Min T: +22.1, TS Min T: 08:10
+  Max T: +25.2, TS Max T: 17:23
+  Avrg T: +23.0
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 4:
+  Date: 2026-04-26
+  Min T: +22.8, TS Min T: 22:40
+  Max T: +25.3, TS Max T: 17:30
+  Avrg T: +23.1
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 5:
+  Date: 2026-04-25
+  Min T: +22.4, TS Min T: 00:00
+  Max T: +25.4, TS Max T: 17:29
+  Avrg T: +22.9
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 6:
+  Date: 2026-04-24
+  Min T: +22.0, TS Min T: 12:06
+  Max T: +24.9, TS Max T: 17:43
+  Avrg T: +22.5
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 7:
+  Date: 2026-04-23
+  Min T: +21.6, TS Min T: 11:52
+  Max T: +24.6, TS Max T: 17:40
+  Avrg T: +22.3
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 8:
+  Date: 2026-04-22
+  Min T: +21.9, TS Min T: 13:04
+  Max T: +22.8, TS Max T: 17:58
+  Avrg T: +22.3
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 9:
+  Date: 2026-04-21
+  Min T: +22.1, TS Min T: 07:09
+  Max T: +26.0, TS Max T: 17:37
+  Avrg T: +22.9
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 10:
+  Date: 2026-04-20
+  Min T: +22.5, TS Min T: 06:54
+  Max T: +26.5, TS Max T: 17:31
+  Avrg T: +22.9
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 11:
+  Date: 2026-04-19
+  Min T: +22.2, TS Min T: 00:00
+  Max T: +22.9, TS Max T: 12:35
+  Avrg T: +22.6
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 12:
+  Date: 2026-04-18
+  Min T: +22.0, TS Min T: 18:26
+  Max T: +22.7, TS Max T: 08:56
+  Avrg T: +22.3
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 13:
+  Date: 2026-04-17
+  Min T: +22.0, TS Min T: 08:08
+  Max T: +24.9, TS Max T: 15:50
+  Avrg T: +22.4
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 14:
+  Date: 2026-04-16
+  Min T: +22.1, TS Min T: 10:50
+  Max T: +26.3, TS Max T: 15:56
+  Avrg T: +22.6
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 15:
+  Date: 2026-04-15
+  Min T: +22.3, TS Min T: 07:27
+  Max T: +24.1, TS Max T: 17:40
+  Avrg T: +22.8
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 16:
+  Date: 2026-04-14
+  Min T: +22.3, TS Min T: 06:59
+  Max T: +22.8, TS Max T: 12:25
+  Avrg T: +22.5
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 17:
+  Date: 2026-04-13
+  Min T: +22.5, TS Min T: 08:17
+  Max T: +23.0, TS Max T: 00:00
+  Avrg T: +22.6
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 18:
+  Date: 2026-04-12
+  Min T: +22.8, TS Min T: 00:00
+  Max T: +23.1, TS Max T: 07:47
+  Avrg T: +22.9
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 19:
+  Date: 2026-04-11
+  Min T: +22.6, TS Min T: 00:00
+  Max T: +26.1, TS Max T: 16:05
+  Avrg T: +23.0
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 20:
+  Date: 2026-04-10
+  Min T: +22.0, TS Min T: 08:01
+  Max T: +22.6, TS Max T: 17:18
+  Avrg T: +22.3
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 21:
+  Date: 2026-04-09
+  Min T: +21.9, TS Min T: 07:19
+  Max T: +25.6, TS Max T: 15:57
+  Avrg T: +22.5
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 22:
+  Date: 2026-04-08
+  Min T: +22.3, TS Min T: 09:26
+  Max T: +24.4, TS Max T: 16:04
+  Avrg T: +22.6
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 23:
+  Date: 2026-04-07
+  Min T: +22.8, TS Min T: 20:56
+  Max T: +29.8, TS Max T: 16:05
+  Avrg T: +23.7
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 24:
+  Date: 2026-04-06
+  Min T: +23.5, TS Min T: 13:18
+  Max T: +31.0, TS Max T: 16:07
+  Avrg T: +24.1
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 25:
+  Date: 2026-04-05
+  Min T: +23.7, TS Min T: 00:00
+  Max T: +25.6, TS Max T: 16:13
+  Avrg T: +24.0
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 26:
+  Date: 2026-04-04
+  Min T: +23.7, TS Min T: 22:21
+  Max T: +29.6, TS Max T: 16:08
+  Avrg T: +24.3
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 27:
+  Date: 2026-04-03
+  Min T: +24.0, TS Min T: 19:16
+  Max T: +25.1, TS Max T: 09:32
+  Avrg T: +24.5
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 28:
+  Date: 2026-04-02
+  Min T: +22.5, TS Min T: 00:00
+  Max T: +24.7, TS Max T: 22:26
+  Avrg T: +23.5
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 29:
+  Date: 2026-04-01
+  Min T: +21.8, TS Min T: 14:13
+  Max T: +23.0, TS Max T: 02:55
+  Avrg T: +22.3
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 30:
+  Date: 2026-03-31
+  Min T: +22.1, TS Min T: 12:53
+  Max T: +26.0, TS Max T: 16:10
+  Avrg T: +22.9
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 31:
+  Date: 2026-03-30
+  Min T: +22.3, TS Min T: 08:11
+  Max T: +24.8, TS Max T: 16:10
+  Avrg T: +22.8
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 32:
+  Date: 2026-03-29
+  Min T: +22.5, TS Min T: 18:58
+  Max T: +23.0, TS Max T: 08:16
+  Avrg T: +22.7
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 33:
+  Date: 2026-03-28
+  Min T: +22.5, TS Min T: 00:00
+  Max T: +25.1, TS Max T: 16:08
+  Avrg T: +22.8
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 34:
+  Date: 2026-03-27
+  Min T: +22.0, TS Min T: 11:19
+  Max T: +22.7, TS Max T: 04:40
+  Avrg T: +22.3
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 35:
+  Date: 2026-03-26
+  Min T: +21.9, TS Min T: 07:43
+  Max T: +24.5, TS Max T: 15:33
+  Avrg T: +22.6
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 36:
+  Date: 2026-03-25
+  Min T: +22.1, TS Min T: 07:47
+  Max T: +24.6, TS Max T: 15:36
+  Avrg T: +22.5
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 37:
+  Date: 2026-03-24
+  Min T: +21.8, TS Min T: 09:32
+  Max T: +25.3, TS Max T: 18:11
+  Avrg T: +22.5
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 38:
+  Date: 2026-03-23
+  Min T: +21.6, TS Min T: 10:27
+  Max T: +22.5, TS Max T: 15:40
+  Avrg T: +22.0
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 39:
+  Date: 2026-03-22
+  Min T: +22.1, TS Min T: 15:54
+  Max T: +22.6, TS Max T: 13:18
+  Avrg T: +22.2
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 40:
+  Date: 2026-03-21
+  Min T: +22.0, TS Min T: 00:00
+  Max T: +25.3, TS Max T: 15:34
+  Avrg T: +22.3
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 41:
+  Date: 2026-03-20
+  Min T: +21.9, TS Min T: 19:47
+  Max T: +22.6, TS Max T: 01:44
+  Avrg T: +22.2
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 42:
+  Date: 2026-03-19
+  Min T: +22.0, TS Min T: 07:32
+  Max T: +25.3, TS Max T: 15:29
+  Avrg T: +22.6
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 43:
+  Date: 2026-03-18
+  Min T: +21.9, TS Min T: 16:43
+  Max T: +22.8, TS Max T: 00:00
+  Avrg T: +22.3
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 44:
+  Date: 2026-03-17
+  Min T: +22.4, TS Min T: 16:59
+  Max T: +23.1, TS Max T: 00:00
+  Avrg T: +22.7
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 45:
+  Date: 2026-03-16
+  Min T: +22.4, TS Min T: 11:24
+  Max T: +23.6, TS Max T: 13:50
+  Avrg T: +22.8
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 46:
+  Date: 2026-03-15
+  Min T: +23.0, TS Min T: 15:46
+  Max T: +23.2, TS Max T: 09:31
+  Avrg T: +23.1
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 47:
+  Date: 2026-03-14
+  Min T: +23.0, TS Min T: 00:00
+  Max T: +23.2, TS Max T: 14:20
+  Avrg T: +23.0
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 48:
+  Date: 2026-03-13
+  Min T: +22.3, TS Min T: 08:31
+  Max T: +23.2, TS Max T: 15:12
+  Avrg T: +22.7
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 49:
+  Date: 2026-03-12
+  Min T: +22.3, TS Min T: 12:49
+  Max T: +23.4, TS Max T: 05:17
+  Avrg T: +22.8
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 50:
+  Date: 2026-03-11
+  Min T: +22.5, TS Min T: 16:22
+  Max T: +23.7, TS Max T: 00:52
+  Avrg T: +23.1
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 51:
+  Date: 2026-03-10
+  Min T: +23.1, TS Min T: 07:26
+  Max T: +23.6, TS Max T: 05:02
+  Avrg T: +23.3
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 52:
+  Date: 2026-03-09
+  Min T: +22.1, TS Min T: 11:54
+  Max T: +23.4, TS Max T: 22:46
+  Avrg T: +22.7
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 53:
+  Date: 2026-03-08
+  Min T: +22.6, TS Min T: 15:45
+  Max T: +22.9, TS Max T: 11:37
+  Avrg T: +22.7
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 54:
+  Date: 2026-03-07
+  Min T: +22.6, TS Min T: 00:00
+  Max T: +22.8, TS Max T: 07:41
+  Avrg T: +22.6
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 55:
+  Date: 2026-03-06
+  Min T: +22.1, TS Min T: 07:11
+  Max T: +22.6, TS Max T: 19:24
+  Avrg T: +22.3
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 56:
+  Date: 2026-03-05
+  Min T: +22.0, TS Min T: 17:52
+  Max T: +23.2, TS Max T: 15:24
+  Avrg T: +22.2
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 57:
+  Date: 2026-03-04
+  Min T: +22.0, TS Min T: 17:01
+  Max T: +22.9, TS Max T: 15:23
+  Avrg T: +22.2
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 58:
+  Date: 2026-03-03
+  Min T: +22.0, TS Min T: 17:01
+  Max T: +23.1, TS Max T: 15:10
+  Avrg T: +22.4
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 59:
+  Date: 2026-03-02
+  Min T: +21.8, TS Min T: 07:48
+  Max T: +23.3, TS Max T: 18:40
+  Avrg T: +22.4
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+ 60:
+  Date: 2026-03-01
+  Min T: +21.9, TS Min T: 18:53
+  Max T: +22.8, TS Max T: 15:12
+  Avrg T: +22.2
+  Alarm:
+   0:
+    t Acc: 0
+   1:
+    t Acc: 1440, TS A: 00:00, C A: 0
+  Int Sensor timeout:
+   t AccST: 0
+  Events: 0
+Cert:
+ Vers: 1.0
+ Lot: 1792_20_08
+ Issuer: Berlinger & Co. AG
+ Valid from: 2020-08-21 07:39
+ Owner: Berlinger & Co. AG
+ Public Key: d73cd26b379bd0a250d98498e15c739ab53594e9768b247a0713637cba30e474b4fcc1aae45f30ec7cc878c102cf9648d775670d2f93b48726a0f21d3ca71074
+Sig Cert: 6eef7b154b51a1f4a4186e76b495d43dc25cedbaab8b18486895df5d773530795679b8aa3678e511e45e28cb894bcc051dd90d13f19f699c4f42b46c4ed5d621
+Sig: 0b0e409b4fb7a9f0d11779a35ab0953e81d16dace7d9a462fd7fc6abe40069490fe10ca5acd700e8b5428589f7b2a4fee8b0d9a69742c0ec826a319516248ca4
