@@ -35,6 +35,7 @@ export const Sidebar = ({
             <Sidenav>
                 <SidenavItems>
                     <SidebarNavLink to="/" label={i18n.t('Upload report')} end />
+                    <SidebarNavLink to="/mapping" label={i18n.t('Mapping')} />
                 </SidenavItems>
             </Sidenav>
             <button

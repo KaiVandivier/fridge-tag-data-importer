@@ -4,6 +4,7 @@ import { createHashRouter, Outlet, RouterProvider } from 'react-router-dom'
 import { Layout } from '@/components/layout/Layout'
 import { PageWrapper } from '@/components/layout/PageWrapper'
 import { HomePage } from '@/pages/HomePage/HomePage'
+import { MappingPage } from '@/pages/MappingPage/MappingPage'
 import { SyncUrlWithGlobalShell } from '@/utils/SyncUrlWithGlobalShell'
 
 const queryClient = new QueryClient()
@@ -21,7 +22,10 @@ const router = createHashRouter([
                                 <Outlet />
                             </PageWrapper>
                         ),
-                        children: [{ path: '/', element: <HomePage /> }],
+                        children: [
+                            { path: '/', element: <HomePage /> },
+                            { path: '/mapping', element: <MappingPage /> },
+                        ],
                     },
                 ],
             },
