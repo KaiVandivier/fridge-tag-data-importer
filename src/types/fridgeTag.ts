@@ -51,6 +51,8 @@ export interface ConfigInfo {
     cid: string | null
     lot: string | null
     zone: string | null
+    tempUnit: string | null
+    testTimestamp: string | null
     alarmThresholds: AlarmThreshold[]
 }
 

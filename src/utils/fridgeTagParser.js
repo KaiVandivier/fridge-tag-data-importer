@@ -7,11 +7,15 @@
 
 import { Key } from './keys.js'
 
-// Toggle verbose parser logging via Vite env flag (set VITE_PARSER_DEBUG=true)
+// Toggle verbose parser logging by setting globalThis.__FRIDGE_PARSER_DEBUG = true
+// in the browser, or FRIDGE_PARSER_DEBUG=true in a Node/Jest env.
+// (Avoids `import.meta` syntax so this file can be parsed in CommonJS contexts like Jest.)
 const enableParserDebug =
-  typeof import.meta !== 'undefined' &&
-  import.meta.env &&
-  import.meta.env.VITE_PARSER_DEBUG === 'true'
+  (typeof globalThis !== 'undefined' &&
+    globalThis.__FRIDGE_PARSER_DEBUG === true) ||
+  (typeof process !== 'undefined' &&
+    process.env &&
+    process.env.FRIDGE_PARSER_DEBUG === 'true')
 const logDebug = (...args) => {
   if (enableParserDebug) {
     console.debug(...args)
@@ -57,6 +61,8 @@ function createFridgeTagData() {
       cid: null,
       lot: null,
       zone: null,
+      tempUnit: null,
+      testTimestamp: null,
       alarmThresholds: [],
     },
     history: {
@@ -163,8 +169,11 @@ function parseLine(line) {
     // Additional comma-separated values become sibling entries
     for (let i = 1; i < parts.length; i++) {
       const part = parts[i]
-      if (part.includes(':')) {
-        const [subKey, subVal] = part.split(':').map(p => p.trim())
+      const subColonIdx = part.indexOf(':')
+      if (subColonIdx !== -1) {
+        // Split on the first colon only so values containing ':' (e.g. timestamps like 09:49) survive
+        const subKey = part.substring(0, subColonIdx).trim()
+        const subVal = part.substring(subColonIdx + 1).trim()
         entries.push({ key: subKey, value: subVal, isSection: false, isIndex: false })
       }
     }
@@ -259,7 +268,7 @@ export class FridgeTagParser {
   }
 
   _setValue(section, key, value, histRecord, alarmSection) {
-    // Don't apply cleanNumber to date/timestamp fields
+    // Skip cleanNumber for string-typed fields: timestamps, identifiers, free-form text
     if (
       ![
         Key.DATE,
@@ -272,6 +281,11 @@ export class FridgeTagParser {
         Key.PM_TIMESTAMP,
         Key.TEST_TIMESTAMP,
         Key.VALID_FROM,
+        Key.DEVICE,
+        Key.FW_VERSION,
+        Key.PCB,
+        Key.LOT,
+        Key.TEMP_UNIT,
       ].includes(key)
     ) {
       value = cleanNumber(value)
@@ -290,6 +304,8 @@ export class FridgeTagParser {
       else if (key === Key.CID) this.data.config.cid = value
       else if (key === Key.LOT) this.data.config.lot = value
       else if (key === Key.ZONE) this.data.config.zone = value
+      else if (key === Key.TEMP_UNIT) this.data.config.tempUnit = value
+      else if (key === Key.TEST_TIMESTAMP) this.data.config.testTimestamp = value
     } else if (section.startsWith('AlarmLevel') && alarmSection === 'config') {
       const level = parseInt(section.replace('AlarmLevel', ''), 10)
       let threshold = this.data.config.alarmThresholds.find((t) => t.level === level)
@@ -352,6 +368,8 @@ export function toJson(data) {
       cid: data.config.cid,
       lot: data.config.lot,
       zone: data.config.zone,
+      tempUnit: data.config.tempUnit,
+      testTimestamp: data.config.testTimestamp,
       alarmThresholds: data.config.alarmThresholds
         .sort((a, b) => a.level - b.level)
         .map((t) => ({
