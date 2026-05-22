@@ -6,11 +6,22 @@ import {
 } from '@dhis2/ui'
 import { useState } from 'react'
 import styles from './MappingPage.module.css'
+import { useProgramAttributes } from '@/utils/useProgramAttributes'
 import { usePrograms } from '@/utils/usePrograms'
 
 export const MappingPage = () => {
-    const { programs, isLoading, error } = usePrograms()
+    const {
+        programs,
+        isLoading: programsLoading,
+        error: programsError,
+    } = usePrograms()
     const [selectedProgramId, setSelectedProgramId] = useState<string>('')
+    const [selectedAttributeId, setSelectedAttributeId] = useState<string>('')
+    const {
+        attributes,
+        isLoading: attributesLoading,
+        error: attributesError,
+    } = useProgramAttributes(selectedProgramId)
 
     return (
         <div className={styles.page}>
@@ -21,24 +32,58 @@ export const MappingPage = () => {
                 </p>
             </header>
 
-            {error ? (
+            {programsError ? (
                 <NoticeBox error title={i18n.t('Error loading programs')}>
-                    {error.message || i18n.t('An unknown error occurred')}
+                    {programsError.message ||
+                        i18n.t('An unknown error occurred')}
                 </NoticeBox>
             ) : (
                 <SingleSelectField
                     label={i18n.t('Temperature modeling program')}
                     filterable
-                    loading={isLoading}
+                    loading={programsLoading}
                     noMatchText={i18n.t('No matches found')}
                     selected={selectedProgramId}
-                    onChange={({ selected }) => setSelectedProgramId(selected)}
+                    onChange={({ selected }) => {
+                        setSelectedProgramId(selected)
+                        setSelectedAttributeId('')
+                    }}
                 >
                     {programs?.map((program) => (
                         <SingleSelectOption
                             key={program.id}
                             label={program.displayName}
                             value={program.id}
+                        />
+                    ))}
+                </SingleSelectField>
+            )}
+
+            {attributesError ? (
+                <NoticeBox
+                    error
+                    title={i18n.t('Error loading program attributes')}
+                >
+                    {attributesError.message ||
+                        i18n.t('An unknown error occurred')}
+                </NoticeBox>
+            ) : (
+                <SingleSelectField
+                    label={i18n.t('Fridge-tag identifier')}
+                    filterable
+                    disabled={!selectedProgramId}
+                    loading={attributesLoading}
+                    noMatchText={i18n.t('No matches found')}
+                    selected={selectedAttributeId}
+                    onChange={({ selected }) =>
+                        setSelectedAttributeId(selected)
+                    }
+                >
+                    {attributes?.map((attribute) => (
+                        <SingleSelectOption
+                            key={attribute.id}
+                            label={attribute.displayName}
+                            value={attribute.id}
                         />
                     ))}
                 </SingleSelectField>
