@@ -8,7 +8,60 @@ import { useEffect, useState } from 'react'
 import styles from './MappingPage.module.css'
 import { useProgramAttributes } from '@/utils/useProgramAttributes'
 import { usePrograms } from '@/utils/usePrograms'
+import { useProgramStageDataElements } from '@/utils/useProgramStageDataElements'
 import { useProgramStages } from '@/utils/useProgramStages'
+
+type DataElementFieldKey =
+    | 'averageStorageTemperature'
+    | 'lowerAlarmLimit'
+    | 'minTemp'
+    | 'totalLowAlarmTime'
+    | 'upperAlarmLimit'
+    | 'maxTemp'
+    | 'totalHighAlarmTime'
+    | 'events'
+
+type DataElementSelections = Record<DataElementFieldKey, string>
+
+const emptyDataElementSelections: DataElementSelections = {
+    averageStorageTemperature: '',
+    lowerAlarmLimit: '',
+    minTemp: '',
+    totalLowAlarmTime: '',
+    upperAlarmLimit: '',
+    maxTemp: '',
+    totalHighAlarmTime: '',
+    events: '',
+}
+
+const useDataElementFields = (): Array<{
+    key: DataElementFieldKey
+    label: string
+}> => [
+    {
+        key: 'averageStorageTemperature',
+        label: i18n.t('Average storage temperature data element'),
+    },
+    {
+        key: 'lowerAlarmLimit',
+        label: i18n.t('Lower alarm limit data element'),
+    },
+    { key: 'minTemp', label: i18n.t('Min. temp. data element') },
+    {
+        key: 'totalLowAlarmTime',
+        label: i18n.t('Total low alarm time data element'),
+    },
+    {
+        key: 'upperAlarmLimit',
+        label: i18n.t('Upper alarm limit data element'),
+    },
+    { key: 'maxTemp', label: i18n.t('Max. temp. data element') },
+    {
+        key: 'totalHighAlarmTime',
+        label: i18n.t('Total high alarm time data element'),
+    },
+    { key: 'events', label: i18n.t('Events data element') },
+]
 
 export const MappingPage = () => {
     const {
@@ -20,6 +73,8 @@ export const MappingPage = () => {
     const [selectedAttributeId, setSelectedAttributeId] = useState<string>('')
     const [selectedProgramStageId, setSelectedProgramStageId] =
         useState<string>('')
+    const [dataElementSelections, setDataElementSelections] =
+        useState<DataElementSelections>(emptyDataElementSelections)
     const {
         attributes,
         isLoading: attributesLoading,
@@ -30,12 +85,19 @@ export const MappingPage = () => {
         isLoading: programStagesLoading,
         error: programStagesError,
     } = useProgramStages(selectedProgramId)
+    const {
+        dataElements,
+        isLoading: dataElementsLoading,
+        error: dataElementsError,
+    } = useProgramStageDataElements(selectedProgramStageId)
 
     useEffect(() => {
         if (programStages?.length === 1) {
             setSelectedProgramStageId(programStages[0].id)
         }
     }, [programStages])
+
+    const dataElementFields = useDataElementFields()
 
     return (
         <div className={styles.page}>
@@ -62,6 +124,7 @@ export const MappingPage = () => {
                         setSelectedProgramId(selected)
                         setSelectedAttributeId('')
                         setSelectedProgramStageId('')
+                        setDataElementSelections(emptyDataElementSelections)
                     }}
                 >
                     {programs?.map((program) => (
@@ -120,9 +183,10 @@ export const MappingPage = () => {
                     loading={programStagesLoading}
                     noMatchText={i18n.t('No matches found')}
                     selected={selectedProgramStageId}
-                    onChange={({ selected }) =>
+                    onChange={({ selected }) => {
                         setSelectedProgramStageId(selected)
-                    }
+                        setDataElementSelections(emptyDataElementSelections)
+                    }}
                 >
                     {programStages?.map((programStage) => (
                         <SingleSelectOption
@@ -132,6 +196,54 @@ export const MappingPage = () => {
                         />
                     ))}
                 </SingleSelectField>
+            )}
+
+            {dataElementsError ? (
+                <NoticeBox error title={i18n.t('Error loading data elements')}>
+                    {dataElementsError.message ||
+                        i18n.t('An unknown error occurred')}
+                </NoticeBox>
+            ) : (
+                dataElementFields.map(({ key, label }) => {
+                    const selectedId = dataElementSelections[key]
+                    const selectedByOthers = new Set(
+                        dataElementFields
+                            .filter((field) => field.key !== key)
+                            .map((field) => dataElementSelections[field.key])
+                            .filter(Boolean)
+                    )
+                    const availableDataElements = dataElements?.filter(
+                        (dataElement) =>
+                            !selectedByOthers.has(dataElement.id) ||
+                            dataElement.id === selectedId
+                    )
+
+                    return (
+                        <SingleSelectField
+                            key={key}
+                            label={label}
+                            filterable
+                            disabled={!selectedProgramStageId}
+                            loading={dataElementsLoading}
+                            noMatchText={i18n.t('No matches found')}
+                            selected={selectedId}
+                            onChange={({ selected }) =>
+                                setDataElementSelections((prev) => ({
+                                    ...prev,
+                                    [key]: selected,
+                                }))
+                            }
+                        >
+                            {availableDataElements?.map((dataElement) => (
+                                <SingleSelectOption
+                                    key={dataElement.id}
+                                    label={dataElement.displayName}
+                                    value={dataElement.id}
+                                />
+                            ))}
+                        </SingleSelectField>
+                    )
+                })
             )}
         </div>
     )
