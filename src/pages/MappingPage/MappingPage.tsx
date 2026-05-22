@@ -4,10 +4,11 @@ import {
     SingleSelectField,
     SingleSelectOption,
 } from '@dhis2/ui'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import styles from './MappingPage.module.css'
 import { useProgramAttributes } from '@/utils/useProgramAttributes'
 import { usePrograms } from '@/utils/usePrograms'
+import { useProgramStages } from '@/utils/useProgramStages'
 
 export const MappingPage = () => {
     const {
@@ -17,11 +18,24 @@ export const MappingPage = () => {
     } = usePrograms()
     const [selectedProgramId, setSelectedProgramId] = useState<string>('')
     const [selectedAttributeId, setSelectedAttributeId] = useState<string>('')
+    const [selectedProgramStageId, setSelectedProgramStageId] =
+        useState<string>('')
     const {
         attributes,
         isLoading: attributesLoading,
         error: attributesError,
     } = useProgramAttributes(selectedProgramId)
+    const {
+        programStages,
+        isLoading: programStagesLoading,
+        error: programStagesError,
+    } = useProgramStages(selectedProgramId)
+
+    useEffect(() => {
+        if (programStages?.length === 1) {
+            setSelectedProgramStageId(programStages[0].id)
+        }
+    }, [programStages])
 
     return (
         <div className={styles.page}>
@@ -47,6 +61,7 @@ export const MappingPage = () => {
                     onChange={({ selected }) => {
                         setSelectedProgramId(selected)
                         setSelectedAttributeId('')
+                        setSelectedProgramStageId('')
                     }}
                 >
                     {programs?.map((program) => (
@@ -84,6 +99,36 @@ export const MappingPage = () => {
                             key={attribute.id}
                             label={attribute.displayName}
                             value={attribute.id}
+                        />
+                    ))}
+                </SingleSelectField>
+            )}
+
+            {programStagesError ? (
+                <NoticeBox
+                    error
+                    title={i18n.t('Error loading program stages')}
+                >
+                    {programStagesError.message ||
+                        i18n.t('An unknown error occurred')}
+                </NoticeBox>
+            ) : (
+                <SingleSelectField
+                    label={i18n.t('Temperature reading program stage')}
+                    filterable
+                    disabled={!selectedProgramId}
+                    loading={programStagesLoading}
+                    noMatchText={i18n.t('No matches found')}
+                    selected={selectedProgramStageId}
+                    onChange={({ selected }) =>
+                        setSelectedProgramStageId(selected)
+                    }
+                >
+                    {programStages?.map((programStage) => (
+                        <SingleSelectOption
+                            key={programStage.id}
+                            label={programStage.displayName}
+                            value={programStage.id}
                         />
                     ))}
                 </SingleSelectField>
