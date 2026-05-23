@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2026-05-23T17:05:16.765Z\n"
-"PO-Revision-Date: 2026-05-23T17:05:16.765Z\n"
+"POT-Creation-Date: 2026-05-23T18:09:41.925Z\n"
+"PO-Revision-Date: 2026-05-23T18:09:41.925Z\n"
 
 msgid "Upload report"
 msgstr "Upload report"
@@ -38,6 +38,21 @@ msgstr "Parsing…"
 
 msgid "Could not parse report"
 msgstr "Could not parse report"
+
+msgid "Mapping not configured"
+msgstr "Mapping not configured"
+
+msgid ""
+"A program and identifier attribute have not been configured yet, so the "
+"device serial cannot be matched to a tracked entity. Configure the mapping "
+"on the Mapping page to enable tracked entity lookup."
+msgstr ""
+"A program and identifier attribute have not been configured yet, so the "
+"device serial cannot be matched to a tracked entity. Configure the mapping "
+"on the Mapping page to enable tracked entity lookup."
+
+msgid "Go to Mapping"
+msgstr "Go to Mapping"
 
 msgid "No report loaded"
 msgstr "No report loaded"
@@ -153,6 +168,46 @@ msgstr "No daily records in this report"
 msgid "OK"
 msgstr "OK"
 
+msgid "Matched tracked entity"
+msgstr "Matched tracked entity"
+
+msgid "Looking up serial"
+msgstr "Looking up serial"
+
+msgid "Searching for tracked entity…"
+msgstr "Searching for tracked entity…"
+
+msgid "Could not search for tracked entity"
+msgstr "Could not search for tracked entity"
+
+msgid "An unknown error occurred"
+msgstr "An unknown error occurred"
+
+msgid "No tracked entity matched this serial"
+msgstr "No tracked entity matched this serial"
+
+msgid ""
+"No tracked entity was found in the configured program with an identifier "
+"attribute matching the device serial number."
+msgstr ""
+"No tracked entity was found in the configured program with an identifier "
+"attribute matching the device serial number."
+
+msgid "Field"
+msgstr "Field"
+
+msgid "Value"
+msgstr "Value"
+
+msgid "Tracked entity ID"
+msgstr "Tracked entity ID"
+
+msgid "Organisation unit"
+msgstr "Organisation unit"
+
+msgid "Created"
+msgstr "Created"
+
 msgid "Average storage temperature data element"
 msgstr "Average storage temperature data element"
 
@@ -185,9 +240,6 @@ msgstr "Save"
 
 msgid "Error loading mapping configuration"
 msgstr "Error loading mapping configuration"
-
-msgid "An unknown error occurred"
-msgstr "An unknown error occurred"
 
 msgid "Map fridge tag values to configured metadata"
 msgstr "Map fridge tag values to configured metadata"

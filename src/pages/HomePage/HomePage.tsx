@@ -5,15 +5,19 @@ import {
     NoticeBox,
 } from '@dhis2/ui'
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { CertificateWidget } from './components/CertificateWidget'
 import { DeviceWidget } from './components/DeviceWidget'
 import { HistoryWidget } from './components/HistoryWidget'
+import { MatchedTrackedEntityWidget } from './components/MatchedTrackedEntityWidget'
 import styles from './HomePage.module.css'
 import type { FridgeTagReport } from '@/types/fridgeTag'
 import {
     parseFridgeTagText,
     readFileAsText,
 } from '@/utils/parseFridgeTagFile'
+import { useFindTrackedEntity } from '@/utils/useFindTrackedEntity'
+import { useMappingConfig } from '@/utils/useMappingConfig'
 
 interface FileInputPayload {
     files: FileList | null
@@ -25,6 +29,23 @@ export const HomePage = () => {
     const [fileName, setFileName] = useState<string | null>(null)
     const [error, setError] = useState<string | null>(null)
     const [busy, setBusy] = useState(false)
+
+    const { data: mappingConfig, isLoading: isLoadingMapping } =
+        useMappingConfig()
+    const programId = mappingConfig?.programId ?? ''
+    const attributeId = mappingConfig?.attributeId ?? ''
+    const isMappingReady = !!programId && !!attributeId
+    const serial = report?.config.serial ?? null
+
+    const {
+        trackedEntity,
+        isLoading: isSearching,
+        error: searchError,
+    } = useFindTrackedEntity({
+        programId,
+        attributeId,
+        value: isMappingReady ? serial : null,
+    })
 
     const handleFile = async (file: File) => {
         setBusy(true)
@@ -100,6 +121,27 @@ export const HomePage = () => {
                 <NoticeBox error title={i18n.t('Could not parse report')}>
                     {error}
                 </NoticeBox>
+            )}
+
+            {report && !error && !isLoadingMapping && !isMappingReady && (
+                <NoticeBox
+                    warning
+                    title={i18n.t('Mapping not configured')}
+                >
+                    {i18n.t(
+                        'A program and identifier attribute have not been configured yet, so the device serial cannot be matched to a tracked entity. Configure the mapping on the Mapping page to enable tracked entity lookup.',
+                    )}{' '}
+                    <Link to="/mapping">{i18n.t('Go to Mapping')}</Link>
+                </NoticeBox>
+            )}
+
+            {report && !error && isMappingReady && (
+                <MatchedTrackedEntityWidget
+                    serial={serial}
+                    trackedEntity={trackedEntity}
+                    isLoading={isSearching}
+                    error={searchError}
+                />
             )}
 
             {report && !error && (

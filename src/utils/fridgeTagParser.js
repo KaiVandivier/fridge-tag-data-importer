@@ -285,6 +285,7 @@ export class FridgeTagParser {
         Key.FW_VERSION,
         Key.PCB,
         Key.LOT,
+        Key.SERIAL,
         Key.TEMP_UNIT,
       ].includes(key)
     ) {
