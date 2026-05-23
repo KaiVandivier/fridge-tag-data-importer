@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom'
 import { CertificateWidget } from './components/CertificateWidget'
 import { DeviceWidget } from './components/DeviceWidget'
 import { HistoryWidget } from './components/HistoryWidget'
+import { ImportWidget } from './components/ImportWidget'
 import { MatchedTrackedEntityWidget } from './components/MatchedTrackedEntityWidget'
 import styles from './HomePage.module.css'
 import type { FridgeTagReport } from '@/types/fridgeTag'
@@ -17,7 +18,10 @@ import {
     readFileAsText,
 } from '@/utils/parseFridgeTagFile'
 import { useFindTrackedEntity } from '@/utils/useFindTrackedEntity'
-import { useMappingConfig } from '@/utils/useMappingConfig'
+import {
+    isMappingConfigComplete,
+    useMappingConfig,
+} from '@/utils/useMappingConfig'
 
 interface FileInputPayload {
     files: FileList | null
@@ -35,10 +39,12 @@ export const HomePage = () => {
     const programId = mappingConfig?.programId ?? ''
     const attributeId = mappingConfig?.attributeId ?? ''
     const isMappingReady = !!programId && !!attributeId
+    const isImportMappingReady = !!mappingConfig && isMappingConfigComplete(mappingConfig)
     const serial = report?.config.serial ?? null
 
     const {
         trackedEntity,
+        enrollment,
         isLoading: isSearching,
         error: searchError,
     } = useFindTrackedEntity({
@@ -143,6 +149,23 @@ export const HomePage = () => {
                     error={searchError}
                 />
             )}
+
+            {report &&
+                !error &&
+                isImportMappingReady &&
+                mappingConfig &&
+                trackedEntity &&
+                enrollment && (
+                    <ImportWidget
+                        report={report}
+                        mapping={mappingConfig}
+                        enrollmentId={enrollment.enrollment}
+                        trackedEntityId={trackedEntity.trackedEntity}
+                        orgUnitId={
+                            enrollment.orgUnit ?? trackedEntity.orgUnit
+                        }
+                    />
+                )}
 
             {report && !error && (
                 <div className={styles.sections}>
