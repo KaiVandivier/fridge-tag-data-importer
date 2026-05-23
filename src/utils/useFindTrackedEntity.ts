@@ -7,6 +7,14 @@ export type TrackedEntityAttributeValue = {
     valueType?: string
 }
 
+export type MatchedEnrollment = {
+    enrollment: string
+    program: string
+    status?: string
+    enrolledAt?: string
+    orgUnit?: string
+}
+
 export type MatchedTrackedEntity = {
     trackedEntity: string
     trackedEntityType: string
@@ -14,6 +22,7 @@ export type MatchedTrackedEntity = {
     createdAt?: string
     updatedAt?: string
     attributes: TrackedEntityAttributeValue[]
+    enrollments?: MatchedEnrollment[]
 }
 
 type TrackedEntitySearchResponse = {
@@ -49,7 +58,7 @@ export const useFindTrackedEntity = ({
                     program: programId,
                     filter: `${attributeId}:eq:${trimmedValue}`,
                     orgUnitMode: 'ACCESSIBLE',
-                    fields: 'trackedEntity,trackedEntityType,orgUnit,createdAt,updatedAt,attributes[attribute,displayName,value,valueType]',
+                    fields: 'trackedEntity,trackedEntityType,orgUnit,createdAt,updatedAt,attributes[attribute,displayName,value,valueType],enrollments[enrollment,program,status,enrolledAt,orgUnit]',
                     pageSize: 1,
                 },
             },
@@ -58,8 +67,14 @@ export const useFindTrackedEntity = ({
             enabled,
         })
 
+    const trackedEntity = data?.trackedEntities?.[0]
+    const enrollment = trackedEntity?.enrollments?.find(
+        (e) => e.program === programId
+    )
+
     return {
-        trackedEntity: data?.trackedEntities?.[0],
+        trackedEntity,
+        enrollment,
         isLoading: enabled && (isLoading || isFetching),
         error,
         enabled,
