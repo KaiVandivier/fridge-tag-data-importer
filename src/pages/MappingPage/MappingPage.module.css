@@ -22,3 +22,22 @@
     font-size: 14px;
     max-width: 720px;
 }
+
+.actionBar {
+    display: flex;
+    justify-content: flex-end;
+    padding-block: var(--spacers-dp8);
+    border-block-end: 1px solid var(--colors-grey300);
+}
+
+.actionBar:last-child {
+    border-block-end: none;
+    border-block-start: 1px solid var(--colors-grey300);
+}
+
+.loadingContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-block-size: 300px;
+}

@@ -1,38 +1,26 @@
 import i18n from '@dhis2/d2-i18n'
 import {
+    Button,
+    ButtonStrip,
+    CircularLoader,
     NoticeBox,
     SingleSelectField,
     SingleSelectOption,
 } from '@dhis2/ui'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import styles from './MappingPage.module.css'
+import {
+    DataElementFieldKey,
+    emptyMappingConfig,
+    isMappingConfigComplete,
+    MappingConfig,
+    useMappingConfig,
+    useSaveMappingConfig,
+} from '@/utils/useMappingConfig'
 import { useProgramAttributes } from '@/utils/useProgramAttributes'
 import { usePrograms } from '@/utils/usePrograms'
 import { useProgramStageDataElements } from '@/utils/useProgramStageDataElements'
 import { useProgramStages } from '@/utils/useProgramStages'
-
-type DataElementFieldKey =
-    | 'averageStorageTemperature'
-    | 'lowerAlarmLimit'
-    | 'minTemp'
-    | 'totalLowAlarmTime'
-    | 'upperAlarmLimit'
-    | 'maxTemp'
-    | 'totalHighAlarmTime'
-    | 'events'
-
-type DataElementSelections = Record<DataElementFieldKey, string>
-
-const emptyDataElementSelections: DataElementSelections = {
-    averageStorageTemperature: '',
-    lowerAlarmLimit: '',
-    minTemp: '',
-    totalLowAlarmTime: '',
-    upperAlarmLimit: '',
-    maxTemp: '',
-    totalHighAlarmTime: '',
-    events: '',
-}
 
 const useDataElementFields = (): Array<{
     key: DataElementFieldKey
@@ -63,41 +51,164 @@ const useDataElementFields = (): Array<{
     { key: 'events', label: i18n.t('Events data element') },
 ]
 
+type ActionBarProps = {
+    canReset: boolean
+    canSave: boolean
+    isSaving: boolean
+    onReset: () => void
+    onSave: () => void
+}
+
+const ActionBar = ({
+    canReset,
+    canSave,
+    isSaving,
+    onReset,
+    onSave,
+}: ActionBarProps) => (
+    <div className={styles.actionBar}>
+        <ButtonStrip end>
+            <Button
+                secondary
+                disabled={!canReset || isSaving}
+                onClick={onReset}
+            >
+                {i18n.t('Reset')}
+            </Button>
+            <Button
+                primary
+                disabled={!canSave}
+                loading={isSaving}
+                onClick={onSave}
+            >
+                {i18n.t('Save')}
+            </Button>
+        </ButtonStrip>
+    </div>
+)
+
 export const MappingPage = () => {
+    const {
+        data: savedConfig,
+        isLoading: configLoading,
+        error: configError,
+    } = useMappingConfig()
+    const { mutate: saveConfig, isLoading: isSaving } = useSaveMappingConfig()
+
+    const [draftConfig, setDraftConfig] =
+        useState<MappingConfig>(emptyMappingConfig)
+
+    useEffect(() => {
+        if (savedConfig) {
+            setDraftConfig(savedConfig)
+        }
+    }, [savedConfig])
+
     const {
         programs,
         isLoading: programsLoading,
         error: programsError,
     } = usePrograms()
-    const [selectedProgramId, setSelectedProgramId] = useState<string>('')
-    const [selectedAttributeId, setSelectedAttributeId] = useState<string>('')
-    const [selectedProgramStageId, setSelectedProgramStageId] =
-        useState<string>('')
-    const [dataElementSelections, setDataElementSelections] =
-        useState<DataElementSelections>(emptyDataElementSelections)
     const {
         attributes,
         isLoading: attributesLoading,
         error: attributesError,
-    } = useProgramAttributes(selectedProgramId)
+    } = useProgramAttributes(draftConfig.programId)
     const {
         programStages,
         isLoading: programStagesLoading,
         error: programStagesError,
-    } = useProgramStages(selectedProgramId)
+    } = useProgramStages(draftConfig.programId)
     const {
         dataElements,
         isLoading: dataElementsLoading,
         error: dataElementsError,
-    } = useProgramStageDataElements(selectedProgramStageId)
+    } = useProgramStageDataElements(draftConfig.programStageId)
 
     useEffect(() => {
-        if (programStages?.length === 1) {
-            setSelectedProgramStageId(programStages[0].id)
+        if (
+            programStages?.length === 1 &&
+            !draftConfig.programStageId
+        ) {
+            const onlyStageId = programStages[0].id
+            setDraftConfig((prev) => ({
+                ...prev,
+                programStageId: onlyStageId,
+            }))
         }
-    }, [programStages])
+    }, [programStages, draftConfig.programStageId])
 
     const dataElementFields = useDataElementFields()
+
+    const isDirty = useMemo(
+        () =>
+            !!savedConfig &&
+            JSON.stringify(savedConfig) !== JSON.stringify(draftConfig),
+        [savedConfig, draftConfig]
+    )
+    const isComplete = isMappingConfigComplete(draftConfig)
+    const canSave = isDirty && isComplete && !isSaving
+
+    const handleProgramChange = (programId: string) => {
+        setDraftConfig({ ...emptyMappingConfig, programId })
+    }
+
+    const handleAttributeChange = (attributeId: string) => {
+        setDraftConfig((prev) => ({ ...prev, attributeId }))
+    }
+
+    const handleProgramStageChange = (programStageId: string) => {
+        setDraftConfig((prev) => ({
+            ...prev,
+            programStageId,
+            dataElementIds: emptyMappingConfig.dataElementIds,
+        }))
+    }
+
+    const handleDataElementChange = (
+        key: DataElementFieldKey,
+        id: string
+    ) => {
+        setDraftConfig((prev) => ({
+            ...prev,
+            dataElementIds: { ...prev.dataElementIds, [key]: id },
+        }))
+    }
+
+    const handleReset = () => {
+        if (savedConfig) {
+            setDraftConfig(savedConfig)
+        }
+    }
+
+    const handleSave = () => {
+        if (canSave) {
+            saveConfig(draftConfig)
+        }
+    }
+
+    if (configLoading) {
+        return (
+            <div className={styles.page}>
+                <div className={styles.loadingContainer}>
+                    <CircularLoader />
+                </div>
+            </div>
+        )
+    }
+
+    if (configError) {
+        return (
+            <div className={styles.page}>
+                <NoticeBox
+                    error
+                    title={i18n.t('Error loading mapping configuration')}
+                >
+                    {configError.message || i18n.t('An unknown error occurred')}
+                </NoticeBox>
+            </div>
+        )
+    }
 
     return (
         <div className={styles.page}>
@@ -107,6 +218,14 @@ export const MappingPage = () => {
                     {i18n.t('Map fridge tag values to configured metadata')}
                 </p>
             </header>
+
+            <ActionBar
+                canReset={isDirty}
+                canSave={canSave}
+                isSaving={isSaving}
+                onReset={handleReset}
+                onSave={handleSave}
+            />
 
             {programsError ? (
                 <NoticeBox error title={i18n.t('Error loading programs')}>
@@ -119,13 +238,8 @@ export const MappingPage = () => {
                     filterable
                     loading={programsLoading}
                     noMatchText={i18n.t('No matches found')}
-                    selected={selectedProgramId}
-                    onChange={({ selected }) => {
-                        setSelectedProgramId(selected)
-                        setSelectedAttributeId('')
-                        setSelectedProgramStageId('')
-                        setDataElementSelections(emptyDataElementSelections)
-                    }}
+                    selected={draftConfig.programId}
+                    onChange={({ selected }) => handleProgramChange(selected)}
                 >
                     {programs?.map((program) => (
                         <SingleSelectOption
@@ -149,12 +263,12 @@ export const MappingPage = () => {
                 <SingleSelectField
                     label={i18n.t('Fridge-tag identifier')}
                     filterable
-                    disabled={!selectedProgramId}
+                    disabled={!draftConfig.programId}
                     loading={attributesLoading}
                     noMatchText={i18n.t('No matches found')}
-                    selected={selectedAttributeId}
+                    selected={draftConfig.attributeId}
                     onChange={({ selected }) =>
-                        setSelectedAttributeId(selected)
+                        handleAttributeChange(selected)
                     }
                 >
                     {attributes?.map((attribute) => (
@@ -179,14 +293,13 @@ export const MappingPage = () => {
                 <SingleSelectField
                     label={i18n.t('Temperature reading program stage')}
                     filterable
-                    disabled={!selectedProgramId}
+                    disabled={!draftConfig.programId}
                     loading={programStagesLoading}
                     noMatchText={i18n.t('No matches found')}
-                    selected={selectedProgramStageId}
-                    onChange={({ selected }) => {
-                        setSelectedProgramStageId(selected)
-                        setDataElementSelections(emptyDataElementSelections)
-                    }}
+                    selected={draftConfig.programStageId}
+                    onChange={({ selected }) =>
+                        handleProgramStageChange(selected)
+                    }
                 >
                     {programStages?.map((programStage) => (
                         <SingleSelectOption
@@ -205,11 +318,14 @@ export const MappingPage = () => {
                 </NoticeBox>
             ) : (
                 dataElementFields.map(({ key, label }) => {
-                    const selectedId = dataElementSelections[key]
+                    const selectedId = draftConfig.dataElementIds[key]
                     const selectedByOthers = new Set(
                         dataElementFields
                             .filter((field) => field.key !== key)
-                            .map((field) => dataElementSelections[field.key])
+                            .map(
+                                (field) =>
+                                    draftConfig.dataElementIds[field.key]
+                            )
                             .filter(Boolean)
                     )
                     const availableDataElements = dataElements?.filter(
@@ -223,15 +339,12 @@ export const MappingPage = () => {
                             key={key}
                             label={label}
                             filterable
-                            disabled={!selectedProgramStageId}
+                            disabled={!draftConfig.programStageId}
                             loading={dataElementsLoading}
                             noMatchText={i18n.t('No matches found')}
                             selected={selectedId}
                             onChange={({ selected }) =>
-                                setDataElementSelections((prev) => ({
-                                    ...prev,
-                                    [key]: selected,
-                                }))
+                                handleDataElementChange(key, selected)
                             }
                         >
                             {availableDataElements?.map((dataElement) => (
@@ -245,6 +358,14 @@ export const MappingPage = () => {
                     )
                 })
             )}
+
+            <ActionBar
+                canReset={isDirty}
+                canSave={canSave}
+                isSaving={isSaving}
+                onReset={handleReset}
+                onSave={handleSave}
+            />
         </div>
     )
 }

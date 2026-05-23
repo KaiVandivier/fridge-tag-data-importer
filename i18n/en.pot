@@ -5,11 +5,14 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2026-04-29T15:17:43.719Z\n"
-"PO-Revision-Date: 2026-04-29T15:17:43.719Z\n"
+"POT-Creation-Date: 2026-05-23T17:05:16.765Z\n"
+"PO-Revision-Date: 2026-05-23T17:05:16.765Z\n"
 
 msgid "Upload report"
 msgstr "Upload report"
+
+msgid "Mapping"
+msgstr "Mapping"
 
 msgid "Failed to parse the report file"
 msgstr "Failed to parse the report file"
@@ -149,3 +152,72 @@ msgstr "No daily records in this report"
 
 msgid "OK"
 msgstr "OK"
+
+msgid "Average storage temperature data element"
+msgstr "Average storage temperature data element"
+
+msgid "Lower alarm limit data element"
+msgstr "Lower alarm limit data element"
+
+msgid "Min. temp. data element"
+msgstr "Min. temp. data element"
+
+msgid "Total low alarm time data element"
+msgstr "Total low alarm time data element"
+
+msgid "Upper alarm limit data element"
+msgstr "Upper alarm limit data element"
+
+msgid "Max. temp. data element"
+msgstr "Max. temp. data element"
+
+msgid "Total high alarm time data element"
+msgstr "Total high alarm time data element"
+
+msgid "Events data element"
+msgstr "Events data element"
+
+msgid "Reset"
+msgstr "Reset"
+
+msgid "Save"
+msgstr "Save"
+
+msgid "Error loading mapping configuration"
+msgstr "Error loading mapping configuration"
+
+msgid "An unknown error occurred"
+msgstr "An unknown error occurred"
+
+msgid "Map fridge tag values to configured metadata"
+msgstr "Map fridge tag values to configured metadata"
+
+msgid "Error loading programs"
+msgstr "Error loading programs"
+
+msgid "Temperature modeling program"
+msgstr "Temperature modeling program"
+
+msgid "No matches found"
+msgstr "No matches found"
+
+msgid "Error loading program attributes"
+msgstr "Error loading program attributes"
+
+msgid "Fridge-tag identifier"
+msgstr "Fridge-tag identifier"
+
+msgid "Error loading program stages"
+msgstr "Error loading program stages"
+
+msgid "Temperature reading program stage"
+msgstr "Temperature reading program stage"
+
+msgid "Error loading data elements"
+msgstr "Error loading data elements"
+
+msgid "Mapping configuration saved"
+msgstr "Mapping configuration saved"
+
+msgid "Failed to save mapping configuration"
+msgstr "Failed to save mapping configuration"
