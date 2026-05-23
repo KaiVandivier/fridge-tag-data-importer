@@ -238,7 +238,11 @@ export const MappingPage = () => {
                     filterable
                     loading={programsLoading}
                     noMatchText={i18n.t('No matches found')}
-                    selected={draftConfig.programId}
+                    selected={
+                        programs?.some((p) => p.id === draftConfig.programId)
+                            ? draftConfig.programId
+                            : ''
+                    }
                     onChange={({ selected }) => handleProgramChange(selected)}
                 >
                     {programs?.map((program) => (
@@ -266,7 +270,13 @@ export const MappingPage = () => {
                     disabled={!draftConfig.programId}
                     loading={attributesLoading}
                     noMatchText={i18n.t('No matches found')}
-                    selected={draftConfig.attributeId}
+                    selected={
+                        attributes?.some(
+                            (a) => a.id === draftConfig.attributeId
+                        )
+                            ? draftConfig.attributeId
+                            : ''
+                    }
                     onChange={({ selected }) =>
                         handleAttributeChange(selected)
                     }
@@ -296,7 +306,13 @@ export const MappingPage = () => {
                     disabled={!draftConfig.programId}
                     loading={programStagesLoading}
                     noMatchText={i18n.t('No matches found')}
-                    selected={draftConfig.programStageId}
+                    selected={
+                        programStages?.some(
+                            (s) => s.id === draftConfig.programStageId
+                        )
+                            ? draftConfig.programStageId
+                            : ''
+                    }
                     onChange={({ selected }) =>
                         handleProgramStageChange(selected)
                     }
@@ -342,7 +358,13 @@ export const MappingPage = () => {
                             disabled={!draftConfig.programStageId}
                             loading={dataElementsLoading}
                             noMatchText={i18n.t('No matches found')}
-                            selected={selectedId}
+                            selected={
+                                availableDataElements?.some(
+                                    (de) => de.id === selectedId
+                                )
+                                    ? selectedId
+                                    : ''
+                            }
                             onChange={({ selected }) =>
                                 handleDataElementChange(key, selected)
                             }
