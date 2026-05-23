@@ -4,6 +4,13 @@ import {
     ButtonStrip,
     CircularLoader,
     NoticeBox,
+    Table,
+    TableBody,
+    TableCell,
+    TableCellHead,
+    TableHead,
+    TableRow,
+    TableRowHead,
 } from '@dhis2/ui'
 import { useMemo, useState } from 'react'
 import styles from './ImportWidget.module.css'
@@ -33,21 +40,119 @@ const isErrorReport = (report: TrackerImportReport | null): boolean =>
     (report.status === 'ERROR' ||
         (report.validationReport?.errorReports?.length ?? 0) > 0)
 
-const summariseStats = (report: TrackerImportReport): string => {
-    const eventStats = report.bundleReport?.typeReportMap?.EVENT?.stats
-    const stats = eventStats ?? report.stats
+const getReportStats = (report: TrackerImportReport) =>
+    report.bundleReport?.typeReportMap?.EVENT?.stats ?? report.stats
+
+const StatsTable = ({ report }: { report: TrackerImportReport }) => {
+    const stats = getReportStats(report)
     if (!stats) {
-        return ''
+        return null
     }
-    return i18n.t(
-        '{{created}} created · {{updated}} updated · {{ignored}} ignored',
-        {
-            created: stats.created ?? 0,
-            updated: stats.updated ?? 0,
-            ignored: stats.ignored ?? 0,
-        }
+    return (
+        <div className={styles.statsTable}>
+            <Table suppressZebraStriping>
+                <TableHead>
+                    <TableRowHead>
+                        <TableCellHead dense>
+                            {i18n.t('Created')}
+                        </TableCellHead>
+                        <TableCellHead dense>
+                            {i18n.t('Updated')}
+                        </TableCellHead>
+                        <TableCellHead dense>
+                            {i18n.t('Deleted')}
+                        </TableCellHead>
+                        <TableCellHead dense>
+                            {i18n.t('Ignored')}
+                        </TableCellHead>
+                        <TableCellHead dense>
+                            {i18n.t('Total')}
+                        </TableCellHead>
+                    </TableRowHead>
+                </TableHead>
+                <TableBody>
+                    <TableRow>
+                        <TableCell dense>{stats.created ?? 0}</TableCell>
+                        <TableCell dense>{stats.updated ?? 0}</TableCell>
+                        <TableCell dense>{stats.deleted ?? 0}</TableCell>
+                        <TableCell dense>{stats.ignored ?? 0}</TableCell>
+                        <TableCell dense>{stats.total ?? '—'}</TableCell>
+                    </TableRow>
+                </TableBody>
+            </Table>
+        </div>
     )
 }
+
+type GroupedIssue = {
+    code?: string
+    message: string
+    uids: string[]
+}
+
+type RawIssue = {
+    code?: string
+    message?: string
+    uid?: string
+}
+
+const groupIssues = (issues: RawIssue[]): GroupedIssue[] => {
+    const grouped = new Map<string, GroupedIssue>()
+    for (const issue of issues) {
+        const message = issue.message ?? ''
+        const key = `${issue.code ?? ''}::${message}`
+        const existing = grouped.get(key)
+        if (existing) {
+            if (issue.uid) {
+                existing.uids.push(issue.uid)
+            }
+        } else {
+            grouped.set(key, {
+                code: issue.code,
+                message,
+                uids: issue.uid ? [issue.uid] : [],
+            })
+        }
+    }
+    return Array.from(grouped.values())
+}
+
+const IssueTable = ({ issues }: { issues: GroupedIssue[] }) => (
+    <div className={styles.issueTable}>
+        <Table suppressZebraStriping>
+            <TableHead>
+                <TableRowHead>
+                    <TableCellHead dense>{i18n.t('Code')}</TableCellHead>
+                    <TableCellHead dense>{i18n.t('Message')}</TableCellHead>
+                    <TableCellHead dense>{i18n.t('Count')}</TableCellHead>
+                    <TableCellHead dense>
+                        {i18n.t('Affected events')}
+                    </TableCellHead>
+                </TableRowHead>
+            </TableHead>
+            <TableBody>
+                {issues.map((issue, idx) => (
+                    <TableRow key={`${issue.code ?? 'issue'}-${idx}`}>
+                        <TableCell dense>
+                            <span className={styles.issueCode}>
+                                {issue.code ?? '—'}
+                            </span>
+                        </TableCell>
+                        <TableCell dense>{issue.message}</TableCell>
+                        <TableCell dense>{issue.uids.length}</TableCell>
+                        <TableCell dense>
+                            <span className={styles.issueUids}>
+                                {issue.uids.length > 0
+                                    ? issue.uids.join(', ')
+                                    : '—'}
+                            </span>
+                        </TableCell>
+                    </TableRow>
+                ))}
+            </TableBody>
+        </Table>
+    </div>
+)
 
 export const ImportWidget = ({
     report,
@@ -279,9 +384,15 @@ const ValidationSummary = ({
 }) => {
     const errors = report.validationReport?.errorReports ?? []
     const warnings = report.validationReport?.warningReports ?? []
-    const stats = summariseStats(report)
 
     if (errors.length > 0) {
+        const groupedErrors = groupIssues(
+            errors.map((e) => ({
+                code: e.errorCode,
+                message: e.message,
+                uid: e.uid,
+            }))
+        )
         return (
             <div className={styles.reportSection}>
                 <NoticeBox error title={title}>
@@ -290,48 +401,28 @@ const ValidationSummary = ({
                             count: errors.length,
                         })}
                 </NoticeBox>
-                <ul className={styles.issueList}>
-                    {errors.map((err, idx) => (
-                        <li
-                            key={`${err.errorCode ?? 'err'}-${err.uid ?? idx}`}
-                            className={styles.issueItem}
-                        >
-                            {err.errorCode && (
-                                <span className={styles.issueCode}>
-                                    {err.errorCode}
-                                </span>
-                            )}
-                            {err.message}
-                            {err.uid ? ` (${err.uid})` : ''}
-                        </li>
-                    ))}
-                </ul>
+                <StatsTable report={report} />
+                <IssueTable issues={groupedErrors} />
             </div>
         )
     }
 
+    const groupedWarnings = groupIssues(
+        warnings.map((w) => ({
+            code: w.warningCode,
+            message: w.warningMessage ?? w.message,
+            uid: w.uid,
+        }))
+    )
+
     return (
         <div className={styles.reportSection}>
             <NoticeBox valid title={title}>
-                {stats || i18n.t('No issues detected.')}
+                {i18n.t('No issues detected.')}
             </NoticeBox>
-            {warnings.length > 0 && (
-                <ul className={styles.issueList}>
-                    {warnings.map((w, idx) => (
-                        <li
-                            key={`${w.warningCode ?? 'warn'}-${w.uid ?? idx}`}
-                            className={styles.issueItem}
-                        >
-                            {w.warningCode && (
-                                <span className={styles.issueCode}>
-                                    {w.warningCode}
-                                </span>
-                            )}
-                            {w.warningMessage ?? w.message}
-                            {w.uid ? ` (${w.uid})` : ''}
-                        </li>
-                    ))}
-                </ul>
+            <StatsTable report={report} />
+            {groupedWarnings.length > 0 && (
+                <IssueTable issues={groupedWarnings} />
             )}
         </div>
     )

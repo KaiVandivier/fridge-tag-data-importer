@@ -1,4 +1,4 @@
-import { useDataEngine } from '@dhis2/app-runtime'
+import { useDataEngine, FetchError } from '@dhis2/app-runtime'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import type { TrackerEvent } from '@/utils/buildEventsPayload'
 import { enrollmentEventsQueryKey } from '@/utils/useEnrollmentEvents'
@@ -58,20 +58,36 @@ export const useTrackerImport = ({
 
     return useMutation<TrackerImportReport, Error, RunImportArgs>({
         mutationFn: async ({ events, dryRun }) => {
-            const response = (await dataEngine.mutate({
-                resource: 'tracker',
-                type: 'create',
-                data: { events },
-                params: {
-                    async: false,
-                    importMode: dryRun ? 'VALIDATE' : 'COMMIT',
-                    importStrategy: 'CREATE_AND_UPDATE',
-                    atomicMode: 'ALL',
-                    validationMode: 'FULL',
-                    reportMode: 'ERRORS',
-                },
-            })) as TrackerImportReport
-            return response
+            try {
+                const response = (await dataEngine.mutate({
+                    resource: 'tracker',
+                    type: 'create',
+                    data: { events },
+                    params: {
+                        async: false,
+                        importMode: dryRun ? 'VALIDATE' : 'COMMIT',
+                        importStrategy: 'CREATE_AND_UPDATE',
+                        atomicMode: 'ALL',
+                        validationMode: 'FULL',
+                        reportMode: 'ERRORS',
+                    },
+                })) as TrackerImportReport
+                return response
+            } catch (err) {
+                // The tracker endpoint returns the import report in the body
+                // of a 409 response. @dhis2/app-runtime surfaces that body as
+                // FetchError.details — unwrap it so the UI can render the
+                // report breakdown instead of a generic error message.
+                if (
+                    err instanceof FetchError &&
+                    err.details &&
+                    typeof err.details === 'object' &&
+                    'validationReport' in err.details
+                ) {
+                    return err.details as TrackerImportReport
+                }
+                throw err
+            }
         },
         onSuccess: (_data, variables) => {
             if (!variables.dryRun && enrollmentId) {
