@@ -2,7 +2,6 @@ import i18n from '@dhis2/d2-i18n'
 import {
     Button,
     ButtonStrip,
-    CircularLoader,
     NoticeBox,
     Table,
     TableBody,
@@ -20,7 +19,7 @@ import {
     buildImportPlan,
     type ImportPlan,
 } from '@/utils/buildEventsPayload'
-import { useEnrollmentEvents } from '@/utils/useEnrollmentEvents'
+import type { EnrollmentEvent } from '@/utils/useFindTrackedEntity'
 import type { MappingConfig } from '@/utils/useMappingConfig'
 import {
     useTrackerImport,
@@ -33,6 +32,7 @@ interface ImportWidgetProps {
     enrollmentId: string
     trackedEntityId: string
     orgUnitId: string
+    existingEvents: EnrollmentEvent[]
 }
 
 const isErrorReport = (report: TrackerImportReport | null): boolean =>
@@ -160,21 +160,12 @@ export const ImportWidget = ({
     enrollmentId,
     trackedEntityId,
     orgUnitId,
+    existingEvents,
 }: ImportWidgetProps) => {
     const [validationReport, setValidationReport] =
         useState<TrackerImportReport | null>(null)
     const [commitReport, setCommitReport] =
         useState<TrackerImportReport | null>(null)
-
-    const {
-        events: existingEvents,
-        isLoading: isLoadingExisting,
-        error: existingError,
-    } = useEnrollmentEvents({
-        enrollmentId,
-        programStageId: mapping.programStageId,
-        orgUnitId,
-    })
 
     const plan: ImportPlan = useMemo(
         () =>
@@ -196,10 +187,7 @@ export const ImportWidget = ({
         ]
     )
 
-    const importMutation = useTrackerImport({
-        enrollmentId,
-        programStageId: mapping.programStageId,
-    })
+    const importMutation = useTrackerImport()
 
     const runTest = () => {
         setValidationReport(null)
@@ -232,143 +220,115 @@ export const ImportWidget = ({
     return (
         <Widget header={i18n.t('Import to tracker')} noncollapsible>
             <div className={styles.body}>
-                {isLoadingExisting && (
-                    <div className={styles.statusLine}>
-                        <CircularLoader small />
-                        <span>{i18n.t('Loading existing events…')}</span>
+                <div className={styles.summaryGrid}>
+                    <div className={styles.summaryCell}>
+                        <span className={styles.summaryLabel}>
+                            {i18n.t('To create')}
+                        </span>
+                        <span className={styles.summaryValue}>
+                            {plan.creates}
+                        </span>
                     </div>
+                    <div className={styles.summaryCell}>
+                        <span className={styles.summaryLabel}>
+                            {i18n.t('To overwrite')}
+                        </span>
+                        <span className={styles.summaryValue}>
+                            {plan.updates}
+                        </span>
+                        <span className={styles.summarySubvalue}>
+                            {i18n.t('Existing events for matched dates')}
+                        </span>
+                    </div>
+                    <div className={styles.summaryCell}>
+                        <span className={styles.summaryLabel}>
+                            {i18n.t('Skipped')}
+                        </span>
+                        <span className={styles.summaryValue}>
+                            {plan.skipped.length}
+                        </span>
+                        <span className={styles.summarySubvalue}>
+                            {i18n.t('Days with no date')}
+                        </span>
+                    </div>
+                    <div className={styles.summaryCell}>
+                        <span className={styles.summaryLabel}>
+                            {i18n.t('Date range')}
+                        </span>
+                        <span className={styles.summarySubvalue}>
+                            {plan.dateRange
+                                ? `${plan.dateRange.from} → ${plan.dateRange.to}`
+                                : '—'}
+                        </span>
+                    </div>
+                </div>
+
+                {!hasEvents && (
+                    <NoticeBox warning title={i18n.t('Nothing to import')}>
+                        {i18n.t(
+                            'No daily records in this report can be turned into events.'
+                        )}
+                    </NoticeBox>
                 )}
 
-                {existingError && (
+                {hasEvents && (
+                    <ButtonStrip>
+                        <Button
+                            primary
+                            onClick={runTest}
+                            loading={
+                                isWorking &&
+                                !commitReport &&
+                                !validationReport
+                            }
+                            disabled={isWorking || commitSucceeded}
+                        >
+                            {i18n.t('Run test import')}
+                        </Button>
+                        <Button
+                            onClick={runImport}
+                            loading={isWorking && validationPassed}
+                            disabled={
+                                isWorking ||
+                                !validationPassed ||
+                                commitSucceeded
+                            }
+                        >
+                            {i18n.t('Send for real')}
+                        </Button>
+                    </ButtonStrip>
+                )}
+
+                {importMutation.error && (
                     <NoticeBox
                         error
-                        title={i18n.t('Could not load existing events')}
+                        title={i18n.t('Tracker request failed')}
                     >
-                        {existingError.message ||
+                        {importMutation.error.message ||
                             i18n.t('An unknown error occurred')}
                     </NoticeBox>
                 )}
 
-                {!isLoadingExisting && !existingError && (
-                    <>
-                        <div className={styles.summaryGrid}>
-                            <div className={styles.summaryCell}>
-                                <span className={styles.summaryLabel}>
-                                    {i18n.t('To create')}
-                                </span>
-                                <span className={styles.summaryValue}>
-                                    {plan.creates}
-                                </span>
-                            </div>
-                            <div className={styles.summaryCell}>
-                                <span className={styles.summaryLabel}>
-                                    {i18n.t('To overwrite')}
-                                </span>
-                                <span className={styles.summaryValue}>
-                                    {plan.updates}
-                                </span>
-                                <span className={styles.summarySubvalue}>
-                                    {i18n.t(
-                                        'Existing events for matched dates'
-                                    )}
-                                </span>
-                            </div>
-                            <div className={styles.summaryCell}>
-                                <span className={styles.summaryLabel}>
-                                    {i18n.t('Skipped')}
-                                </span>
-                                <span className={styles.summaryValue}>
-                                    {plan.skipped.length}
-                                </span>
-                                <span className={styles.summarySubvalue}>
-                                    {i18n.t('Days with no date')}
-                                </span>
-                            </div>
-                            <div className={styles.summaryCell}>
-                                <span className={styles.summaryLabel}>
-                                    {i18n.t('Date range')}
-                                </span>
-                                <span className={styles.summarySubvalue}>
-                                    {plan.dateRange
-                                        ? `${plan.dateRange.from} → ${plan.dateRange.to}`
-                                        : '—'}
-                                </span>
-                            </div>
-                        </div>
+                {validationReport && (
+                    <ValidationSummary
+                        report={validationReport}
+                        title={
+                            validationFailed
+                                ? i18n.t('Test import found problems')
+                                : i18n.t('Test import passed')
+                        }
+                    />
+                )}
 
-                        {!hasEvents && (
-                            <NoticeBox
-                                warning
-                                title={i18n.t('Nothing to import')}
-                            >
-                                {i18n.t(
-                                    'No daily records in this report can be turned into events.'
-                                )}
-                            </NoticeBox>
-                        )}
-
-                        {hasEvents && (
-                            <ButtonStrip>
-                                <Button
-                                    primary
-                                    onClick={runTest}
-                                    loading={
-                                        isWorking &&
-                                        !commitReport &&
-                                        !validationReport
-                                    }
-                                    disabled={isWorking || commitSucceeded}
-                                >
-                                    {i18n.t('Run test import')}
-                                </Button>
-                                <Button
-                                    onClick={runImport}
-                                    loading={
-                                        isWorking && validationPassed
-                                    }
-                                    disabled={
-                                        isWorking ||
-                                        !validationPassed ||
-                                        commitSucceeded
-                                    }
-                                >
-                                    {i18n.t('Send for real')}
-                                </Button>
-                            </ButtonStrip>
-                        )}
-
-                        {importMutation.error && (
-                            <NoticeBox
-                                error
-                                title={i18n.t('Tracker request failed')}
-                            >
-                                {importMutation.error.message ||
-                                    i18n.t('An unknown error occurred')}
-                            </NoticeBox>
-                        )}
-
-                        {validationReport && (
-                            <ValidationSummary
-                                report={validationReport}
-                                title={
-                                    validationFailed
-                                        ? i18n.t('Test import found problems')
-                                        : i18n.t('Test import passed')
-                                }
-                            />
-                        )}
-
-                        {commitReport && (
-                            <ValidationSummary
-                                report={commitReport}
-                                title={
-                                    commitFailed
-                                        ? i18n.t('Import failed')
-                                        : i18n.t('Import complete')
-                                }
-                            />
-                        )}
-                    </>
+                {commitReport && (
+                    <ValidationSummary
+                        report={commitReport}
+                        title={
+                            commitFailed
+                                ? i18n.t('Import failed')
+                                : i18n.t('Import complete')
+                        }
+                    />
                 )}
             </div>
         </Widget>

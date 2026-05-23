@@ -7,12 +7,20 @@ export type TrackedEntityAttributeValue = {
     valueType?: string
 }
 
+export type EnrollmentEvent = {
+    event: string
+    occurredAt: string
+    status?: string
+    programStage: string
+}
+
 export type MatchedEnrollment = {
     enrollment: string
     program: string
     status?: string
     enrolledAt?: string
     orgUnit?: string
+    events?: EnrollmentEvent[]
 }
 
 export type MatchedTrackedEntity = {
@@ -32,12 +40,14 @@ type TrackedEntitySearchResponse = {
 type UseFindTrackedEntityArgs = {
     programId: string
     attributeId: string
+    programStageId?: string
     value: string | null | undefined
 }
 
 export const useFindTrackedEntity = ({
     programId,
     attributeId,
+    programStageId,
     value,
 }: UseFindTrackedEntityArgs) => {
     const trimmedValue = value?.trim() ?? ''
@@ -58,7 +68,7 @@ export const useFindTrackedEntity = ({
                     program: programId,
                     filter: `${attributeId}:eq:${trimmedValue}`,
                     orgUnitMode: 'ACCESSIBLE',
-                    fields: 'trackedEntity,trackedEntityType,orgUnit,createdAt,updatedAt,attributes[attribute,displayName,value,valueType],enrollments[enrollment,program,status,enrolledAt,orgUnit]',
+                    fields: 'trackedEntity,trackedEntityType,orgUnit,createdAt,updatedAt,attributes[attribute,displayName,value,valueType],enrollments[enrollment,program,status,enrolledAt,orgUnit,events[event,occurredAt,status,programStage]]',
                     pageSize: 1,
                 },
             },
@@ -71,10 +81,16 @@ export const useFindTrackedEntity = ({
     const enrollment = trackedEntity?.enrollments?.find(
         (e) => e.program === programId
     )
+    const events = programStageId
+        ? (enrollment?.events ?? []).filter(
+              (e) => e.programStage === programStageId
+          )
+        : (enrollment?.events ?? [])
 
     return {
         trackedEntity,
         enrollment,
+        events,
         isLoading: enabled && (isLoading || isFetching),
         error,
         enabled,

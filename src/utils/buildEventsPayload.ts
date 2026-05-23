@@ -4,7 +4,7 @@ import type {
     DailyRecord,
     FridgeTagReport,
 } from '@/types/fridgeTag'
-import type { EnrollmentEvent } from '@/utils/useEnrollmentEvents'
+import type { EnrollmentEvent } from '@/utils/useFindTrackedEntity'
 import type { MappingConfig } from '@/utils/useMappingConfig'
 
 export type TrackerDataValue = {

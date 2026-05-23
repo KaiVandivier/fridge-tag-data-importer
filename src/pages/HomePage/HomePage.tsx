@@ -45,11 +45,13 @@ export const HomePage = () => {
     const {
         trackedEntity,
         enrollment,
+        events: existingEvents,
         isLoading: isSearching,
         error: searchError,
     } = useFindTrackedEntity({
         programId,
         attributeId,
+        programStageId: mappingConfig?.programStageId,
         value: isMappingReady ? serial : null,
     })
 
@@ -164,6 +166,7 @@ export const HomePage = () => {
                         orgUnitId={
                             enrollment.orgUnit ?? trackedEntity.orgUnit
                         }
+                        existingEvents={existingEvents}
                     />
                 )}
 

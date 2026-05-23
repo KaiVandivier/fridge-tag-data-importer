@@ -1,7 +1,6 @@
 import { useDataEngine, FetchError } from '@dhis2/app-runtime'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import type { TrackerEvent } from '@/utils/buildEventsPayload'
-import { enrollmentEventsQueryKey } from '@/utils/useEnrollmentEvents'
 
 export type TrackerErrorReport = {
     message: string
@@ -44,15 +43,7 @@ type RunImportArgs = {
     dryRun: boolean
 }
 
-type UseTrackerImportArgs = {
-    enrollmentId: string | undefined
-    programStageId: string
-}
-
-export const useTrackerImport = ({
-    enrollmentId,
-    programStageId,
-}: UseTrackerImportArgs) => {
+export const useTrackerImport = () => {
     const dataEngine = useDataEngine()
     const queryClient = useQueryClient()
 
@@ -90,12 +81,9 @@ export const useTrackerImport = ({
             }
         },
         onSuccess: (_data, variables) => {
-            if (!variables.dryRun && enrollmentId) {
+            if (!variables.dryRun) {
                 queryClient.invalidateQueries({
-                    queryKey: enrollmentEventsQueryKey(
-                        enrollmentId,
-                        programStageId
-                    ),
+                    queryKey: ['tracker', 'trackedEntities'],
                 })
             }
         },
