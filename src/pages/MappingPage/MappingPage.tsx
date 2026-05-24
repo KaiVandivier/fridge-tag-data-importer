@@ -238,6 +238,7 @@ export const MappingPage = () => {
             ) : (
                 <SingleSelectField
                     label={i18n.t('Temperature modeling program')}
+                    placeholder={i18n.t('Select a program')}
                     filterable
                     loading={programsLoading}
                     noMatchText={i18n.t('No matches found')}
@@ -269,7 +270,12 @@ export const MappingPage = () => {
             ) : (
                 <>
                     <SingleSelectField
-                        label={i18n.t('Fridge-tag identifier')}
+                        label={i18n.t('Fridge-tag identifier attribute')}
+                        placeholder={
+                            draftConfig.programId
+                                ? i18n.t('Select an attribute')
+                                : i18n.t('Select a program first')
+                        }
                         filterable
                         disabled={!draftConfig.programId}
                         loading={programLoading}
@@ -296,6 +302,11 @@ export const MappingPage = () => {
 
                     <SingleSelectField
                         label={i18n.t('Temperature reading program stage')}
+                        placeholder={
+                            draftConfig.programId
+                                ? i18n.t('Select a program stage')
+                                : i18n.t('Select a program first')
+                        }
                         filterable
                         disabled={!draftConfig.programId}
                         loading={programLoading}
@@ -341,6 +352,11 @@ export const MappingPage = () => {
                         <SingleSelectField
                             key={key}
                             label={label}
+                            placeholder={
+                                draftConfig.programStageId
+                                    ? i18n.t('Select a data element')
+                                    : i18n.t('Select a program stage first')
+                            }
                             filterable
                             disabled={!draftConfig.programStageId}
                             loading={programLoading}

@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2026-05-23T18:09:41.925Z\n"
-"PO-Revision-Date: 2026-05-23T18:09:41.925Z\n"
+"POT-Creation-Date: 2026-05-24T09:44:06.904Z\n"
+"PO-Revision-Date: 2026-05-24T09:44:06.905Z\n"
 
 msgid "Upload report"
 msgstr "Upload report"
@@ -168,6 +168,87 @@ msgstr "No daily records in this report"
 msgid "OK"
 msgstr "OK"
 
+msgid "Created"
+msgstr "Created"
+
+msgid "Updated"
+msgstr "Updated"
+
+msgid "Deleted"
+msgstr "Deleted"
+
+msgid "Ignored"
+msgstr "Ignored"
+
+msgid "Total"
+msgstr "Total"
+
+msgid "Code"
+msgstr "Code"
+
+msgid "Message"
+msgstr "Message"
+
+msgid "Count"
+msgstr "Count"
+
+msgid "Affected events"
+msgstr "Affected events"
+
+msgid "Import to tracker"
+msgstr "Import to tracker"
+
+msgid "To create"
+msgstr "To create"
+
+msgid "To overwrite"
+msgstr "To overwrite"
+
+msgid "Existing events for matched dates"
+msgstr "Existing events for matched dates"
+
+msgid "Skipped"
+msgstr "Skipped"
+
+msgid "Days with no date"
+msgstr "Days with no date"
+
+msgid "Date range"
+msgstr "Date range"
+
+msgid "Nothing to import"
+msgstr "Nothing to import"
+
+msgid "No daily records in this report can be turned into events."
+msgstr "No daily records in this report can be turned into events."
+
+msgid "Run test import"
+msgstr "Run test import"
+
+msgid "Send for real"
+msgstr "Send for real"
+
+msgid "Tracker request failed"
+msgstr "Tracker request failed"
+
+msgid "An unknown error occurred"
+msgstr "An unknown error occurred"
+
+msgid "Test import found problems"
+msgstr "Test import found problems"
+
+msgid "Test import passed"
+msgstr "Test import passed"
+
+msgid "Import failed"
+msgstr "Import failed"
+
+msgid "Import complete"
+msgstr "Import complete"
+
+msgid "No issues detected."
+msgstr "No issues detected."
+
 msgid "Matched tracked entity"
 msgstr "Matched tracked entity"
 
@@ -179,9 +260,6 @@ msgstr "Searching for tracked entity…"
 
 msgid "Could not search for tracked entity"
 msgstr "Could not search for tracked entity"
-
-msgid "An unknown error occurred"
-msgstr "An unknown error occurred"
 
 msgid "No tracked entity matched this serial"
 msgstr "No tracked entity matched this serial"
@@ -204,9 +282,6 @@ msgstr "Tracked entity ID"
 
 msgid "Organisation unit"
 msgstr "Organisation unit"
-
-msgid "Created"
-msgstr "Created"
 
 msgid "Average storage temperature data element"
 msgstr "Average storage temperature data element"
@@ -250,23 +325,35 @@ msgstr "Error loading programs"
 msgid "Temperature modeling program"
 msgstr "Temperature modeling program"
 
+msgid "Select a program"
+msgstr "Select a program"
+
 msgid "No matches found"
 msgstr "No matches found"
 
-msgid "Error loading program attributes"
-msgstr "Error loading program attributes"
+msgid "Error loading program details"
+msgstr "Error loading program details"
 
-msgid "Fridge-tag identifier"
-msgstr "Fridge-tag identifier"
+msgid "Fridge-tag identifier attribute"
+msgstr "Fridge-tag identifier attribute"
 
-msgid "Error loading program stages"
-msgstr "Error loading program stages"
+msgid "Select an attribute"
+msgstr "Select an attribute"
+
+msgid "Select a program first"
+msgstr "Select a program first"
 
 msgid "Temperature reading program stage"
 msgstr "Temperature reading program stage"
 
-msgid "Error loading data elements"
-msgstr "Error loading data elements"
+msgid "Select a program stage"
+msgstr "Select a program stage"
+
+msgid "Select a data element"
+msgstr "Select a data element"
+
+msgid "Select a program stage first"
+msgstr "Select a program stage first"
 
 msgid "Mapping configuration saved"
 msgstr "Mapping configuration saved"
