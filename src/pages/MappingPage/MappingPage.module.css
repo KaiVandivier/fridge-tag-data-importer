@@ -4,10 +4,24 @@
     gap: var(--spacers-dp24);
 }
 
+.headerRow {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--spacers-dp16);
+    padding-block: var(--spacers-dp8);
+    border-block-end: 1px solid var(--colors-grey300);
+}
+
 .header {
     display: flex;
     flex-direction: column;
     gap: var(--spacers-dp4);
+}
+
+.headerActions {
+    flex-shrink: 0;
+    align-self: center;
 }
 
 .title {
@@ -26,12 +40,10 @@
 .actionBar {
     display: flex;
     justify-content: flex-end;
-    padding-block: var(--spacers-dp8);
-    border-block-end: 1px solid var(--colors-grey300);
 }
 
-.actionBar:last-child {
-    border-block-end: none;
+.borderTop {
+    padding-block-start: var(--spacers-dp8);
     border-block-start: 1px solid var(--colors-grey300);
 }
 

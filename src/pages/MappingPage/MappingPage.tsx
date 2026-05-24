@@ -7,6 +7,7 @@ import {
     SingleSelectField,
     SingleSelectOption,
 } from '@dhis2/ui'
+import cx from 'classnames'
 import { useEffect, useMemo, useState } from 'react'
 import styles from './MappingPage.module.css'
 import {
@@ -50,6 +51,7 @@ const useDataElementFields = (): Array<{
 ]
 
 type ActionBarProps = {
+    className?: string
     canReset: boolean
     canSave: boolean
     isSaving: boolean
@@ -58,13 +60,14 @@ type ActionBarProps = {
 }
 
 const ActionBar = ({
+    className,
     canReset,
     canSave,
     isSaving,
     onReset,
     onSave,
 }: ActionBarProps) => (
-    <div className={styles.actionBar}>
+    <div className={cx(styles.actionBar, className)}>
         <ButtonStrip end>
             <Button
                 secondary
@@ -209,20 +212,23 @@ export const MappingPage = () => {
 
     return (
         <div className={styles.page}>
-            <header className={styles.header}>
-                <h1 className={styles.title}>{i18n.t('Mapping')}</h1>
-                <p className={styles.subtitle}>
-                    {i18n.t('Map fridge tag values to configured metadata')}
-                </p>
-            </header>
+            <div className={styles.headerRow}>
+                <header className={styles.header}>
+                    <h1 className={styles.title}>{i18n.t('Mapping')}</h1>
+                    <p className={styles.subtitle}>
+                        {i18n.t('Map fridge tag values to configured metadata')}
+                    </p>
+                </header>
 
-            <ActionBar
-                canReset={isDirty}
-                canSave={canSave}
-                isSaving={isSaving}
-                onReset={handleReset}
-                onSave={handleSave}
-            />
+                <ActionBar
+                    className={styles.headerActions}
+                    canReset={isDirty}
+                    canSave={canSave}
+                    isSaving={isSaving}
+                    onReset={handleReset}
+                    onSave={handleSave}
+                />
+            </div>
 
             {programsError ? (
                 <NoticeBox error title={i18n.t('Error loading programs')}>
@@ -364,6 +370,7 @@ export const MappingPage = () => {
             )}
 
             <ActionBar
+                className={styles.borderTop}
                 canReset={isDirty}
                 canSave={canSave}
                 isSaving={isSaving}
