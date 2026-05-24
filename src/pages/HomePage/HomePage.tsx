@@ -39,7 +39,8 @@ export const HomePage = () => {
     const programId = mappingConfig?.programId ?? ''
     const attributeId = mappingConfig?.attributeId ?? ''
     const isMappingReady = !!programId && !!attributeId
-    const isImportMappingReady = !!mappingConfig && isMappingConfigComplete(mappingConfig)
+    const isMappingComplete =
+        !!mappingConfig && isMappingConfigComplete(mappingConfig)
     const serial = report?.config.serial ?? null
 
     const {
@@ -102,6 +103,18 @@ export const HomePage = () => {
                 </p>
             </header>
 
+            {!isLoadingMapping && !isMappingComplete && (
+                <NoticeBox
+                    warning
+                    title={i18n.t('Mapping not configured')}
+                >
+                    {i18n.t(
+                        'The mapping configuration is incomplete, so reports cannot be matched to tracked entities or imported. Configure all required mappings on the Mapping page to enable these features.',
+                    )}{' '}
+                    <Link to="/mapping">{i18n.t('Go to Mapping')}</Link>
+                </NoticeBox>
+            )}
+
             <section className={styles.uploadCard}>
                 <div className={styles.uploadRow}>
                     <FileInput
@@ -131,18 +144,6 @@ export const HomePage = () => {
                 </NoticeBox>
             )}
 
-            {report && !error && !isLoadingMapping && !isMappingReady && (
-                <NoticeBox
-                    warning
-                    title={i18n.t('Mapping not configured')}
-                >
-                    {i18n.t(
-                        'A program and identifier attribute have not been configured yet, so the device serial cannot be matched to a tracked entity. Configure the mapping on the Mapping page to enable tracked entity lookup.',
-                    )}{' '}
-                    <Link to="/mapping">{i18n.t('Go to Mapping')}</Link>
-                </NoticeBox>
-            )}
-
             {report && !error && isMappingReady && (
                 <MatchedTrackedEntityWidget
                     serial={serial}
@@ -154,7 +155,7 @@ export const HomePage = () => {
 
             {report &&
                 !error &&
-                isImportMappingReady &&
+                isMappingComplete &&
                 mappingConfig &&
                 trackedEntity &&
                 enrollment && (
