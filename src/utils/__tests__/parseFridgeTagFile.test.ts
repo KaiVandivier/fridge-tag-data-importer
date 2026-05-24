@@ -79,3 +79,32 @@ describe('parseFridgeTagText - sanity checks on the rest of the report', () => {
         ])
     })
 })
+
+describe('parseFridgeTagText - certificate and signatures', () => {
+    const report = parseFridgeTagText(sample)
+
+    it('parses the certificate block', () => {
+        expect(report.certificate).toEqual({
+            version: '1.0',
+            lot: '1792_20_08',
+            issuer: 'Berlinger & Co. AG',
+            validFrom: '2020-08-21 07:39',
+            owner: 'Berlinger & Co. AG',
+            publicKey:
+                'd73cd26b379bd0a250d98498e15c739ab53594e9768b247a0713637cba30e474b4fcc1aae45f30ec7cc878c102cf9648d775670d2f93b48726a0f21d3ca71074',
+        })
+    })
+
+    it('keeps the full Sig Cert and Sig hex strings (no truncation)', () => {
+        expect(report.signatures).toEqual({
+            certificate:
+                '6eef7b154b51a1f4a4186e76b495d43dc25cedbaab8b18486895df5d773530795679b8aa3678e511e45e28cb894bcc051dd90d13f19f699c4f42b46c4ed5d621',
+            data: '0b0e409b4fb7a9f0d11779a35ab0953e81d16dace7d9a462fd7fc6abe40069490fe10ca5acd700e8b5428589f7b2a4fee8b0d9a69742c0ec826a319516248ca4',
+        })
+    })
+
+    it('does not coerce issuer/owner strings containing "." to NaN', () => {
+        expect(typeof report.certificate?.issuer).toBe('string')
+        expect(typeof report.certificate?.owner).toBe('string')
+    })
+})

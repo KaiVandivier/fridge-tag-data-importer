@@ -268,7 +268,8 @@ export class FridgeTagParser {
   }
 
   _setValue(section, key, value, histRecord, alarmSection) {
-    // Skip cleanNumber for string-typed fields: timestamps, identifiers, free-form text
+    // Skip cleanNumber for string-typed fields: timestamps, identifiers, free-form text,
+    // and certificate / signature payloads (issuer names contain '.', hex blobs contain 'e').
     if (
       ![
         Key.DATE,
@@ -282,11 +283,18 @@ export class FridgeTagParser {
         Key.TEST_TIMESTAMP,
         Key.VALID_FROM,
         Key.DEVICE,
+        Key.VERSION,
         Key.FW_VERSION,
         Key.PCB,
         Key.LOT,
         Key.SERIAL,
+        Key.CID,
         Key.TEMP_UNIT,
+        Key.ISSUER,
+        Key.OWNER,
+        Key.PUBLIC_KEY,
+        Key.SIGNATURE_CERT,
+        Key.SIGNATURE,
       ].includes(key)
     ) {
       value = cleanNumber(value)
@@ -420,14 +428,21 @@ export function toJson(data) {
           issuer: data.certificate.issuer,
           validFrom: data.certificate.validFrom,
           owner: data.certificate.owner,
-          publicKey: data.certificate.publicKey && typeof data.certificate.publicKey === 'string' ? data.certificate.publicKey.slice(0, 32) + '...' : null,
+          publicKey:
+            typeof data.certificate.publicKey === 'string'
+              ? data.certificate.publicKey
+              : null,
         }
       : null,
     signatures:
       data.signatureCert || data.signature
         ? {
-            certificate: data.signatureCert && typeof data.signatureCert === 'string' ? data.signatureCert.slice(0, 32) + '...' : null,
-            data: data.signature && typeof data.signature === 'string' ? data.signature.slice(0, 32) + '...' : null,
+            certificate:
+              typeof data.signatureCert === 'string'
+                ? data.signatureCert
+                : null,
+            data:
+              typeof data.signature === 'string' ? data.signature : null,
           }
         : null,
   }

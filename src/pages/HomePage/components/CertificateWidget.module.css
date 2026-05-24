@@ -2,13 +2,39 @@
     padding: var(--spacers-dp16);
     display: flex;
     flex-direction: column;
+    gap: var(--spacers-dp24);
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
     gap: var(--spacers-dp16);
+}
+
+.section + .section {
+    border-top: 1px solid var(--colors-grey300);
+    padding-top: var(--spacers-dp16);
+}
+
+.sectionHeader {
+    display: flex;
+    align-items: center;
+    gap: var(--spacers-dp8);
+    color: var(--colors-grey800);
+}
+
+.subheading {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--colors-grey800);
 }
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: var(--spacers-dp12);
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    column-gap: var(--spacers-dp16);
+    row-gap: var(--spacers-dp12);
     margin: 0;
 }
 
@@ -16,10 +42,11 @@
     display: flex;
     flex-direction: column;
     gap: 2px;
+    min-width: 0;
 }
 
 .row dt {
-    font-size: 12px;
+    font-size: 11px;
     color: var(--colors-grey700);
     text-transform: uppercase;
     letter-spacing: 0.04em;
@@ -32,18 +59,41 @@
     word-break: break-word;
 }
 
-.mono {
-    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+.hexRow {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacers-dp4);
+}
+
+.hexLabelRow {
+    display: flex;
+    align-items: center;
+    gap: var(--spacers-dp8);
+}
+
+.hexLabel {
+    font-size: 11px;
+    color: var(--colors-grey700);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.hexMeta {
+    font-size: 11px;
+    color: var(--colors-grey600);
+    margin-right: auto;
+}
+
+.hexValue {
+    display: block;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     font-size: 12px;
-}
-
-.signatures {
-    border-top: 1px solid var(--colors-grey300);
-    padding-top: var(--spacers-dp16);
-}
-
-.subheading {
-    margin: 0 0 var(--spacers-dp8) 0;
-    color: var(--colors-grey800);
-    font-size: 14px;
+    line-height: 1.5;
+    color: var(--colors-grey900);
+    background: var(--colors-grey100);
+    border: 1px solid var(--colors-grey300);
+    border-radius: 4px;
+    padding: var(--spacers-dp8) var(--spacers-dp12);
+    word-break: break-all;
+    user-select: all;
 }

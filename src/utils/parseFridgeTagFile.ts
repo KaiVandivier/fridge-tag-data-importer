@@ -4,7 +4,7 @@ import type { FridgeTagReport } from '@/types/fridgeTag'
 export const parseFridgeTagText = (text: string): FridgeTagReport => {
     const parser = new FridgeTagParser()
     const raw = parser.parseText(text)
-    return toJson(raw) as FridgeTagReport
+    return toJson(raw)
 }
 
 export const readFileAsText = (file: File): Promise<string> =>
