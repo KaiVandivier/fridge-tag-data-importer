@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2026-05-24T09:44:06.904Z\n"
-"PO-Revision-Date: 2026-05-24T09:44:06.905Z\n"
+"POT-Creation-Date: 2026-05-24T11:01:42.340Z\n"
+"PO-Revision-Date: 2026-05-24T11:01:42.341Z\n"
 
 msgid "Upload report"
 msgstr "Upload report"
@@ -27,6 +27,21 @@ msgstr ""
 "Upload a Berlinger Fridge-tag text report to inspect the daily temperature "
 "history, alarms, and device configuration."
 
+msgid "Mapping not configured"
+msgstr "Mapping not configured"
+
+msgid ""
+"The mapping configuration is incomplete, so reports cannot be matched to "
+"tracked entities or imported. Configure all required mappings on the "
+"Mapping page to enable these features."
+msgstr ""
+"The mapping configuration is incomplete, so reports cannot be matched to "
+"tracked entities or imported. Configure all required mappings on the "
+"Mapping page to enable these features."
+
+msgid "Go to Mapping"
+msgstr "Go to Mapping"
+
 msgid "Choose a Fridge-tag report"
 msgstr "Choose a Fridge-tag report"
 
@@ -39,29 +54,23 @@ msgstr "Parsing…"
 msgid "Could not parse report"
 msgstr "Could not parse report"
 
-msgid "Mapping not configured"
-msgstr "Mapping not configured"
-
-msgid ""
-"A program and identifier attribute have not been configured yet, so the "
-"device serial cannot be matched to a tracked entity. Configure the mapping "
-"on the Mapping page to enable tracked entity lookup."
-msgstr ""
-"A program and identifier attribute have not been configured yet, so the "
-"device serial cannot be matched to a tracked entity. Configure the mapping "
-"on the Mapping page to enable tracked entity lookup."
-
-msgid "Go to Mapping"
-msgstr "Go to Mapping"
-
 msgid "No report loaded"
 msgstr "No report loaded"
 
 msgid "Choose a .txt file exported from a Berlinger Fridge-tag device to begin."
 msgstr "Choose a .txt file exported from a Berlinger Fridge-tag device to begin."
 
+msgid "Copied"
+msgstr "Copied"
+
+msgid "Copy"
+msgstr "Copy"
+
 msgid "Certificate & signatures"
 msgstr "Certificate & signatures"
+
+msgid "Certificate"
+msgstr "Certificate"
 
 msgid "Issuer"
 msgstr "Issuer"
@@ -84,11 +93,11 @@ msgstr "Public key"
 msgid "Signatures"
 msgstr "Signatures"
 
-msgid "Certificate"
-msgstr "Certificate"
+msgid "Certificate signature"
+msgstr "Certificate signature"
 
-msgid "Data"
-msgstr "Data"
+msgid "Data signature"
+msgstr "Data signature"
 
 msgid "Device & configuration"
 msgstr "Device & configuration"
@@ -222,11 +231,11 @@ msgstr "Nothing to import"
 msgid "No daily records in this report can be turned into events."
 msgstr "No daily records in this report can be turned into events."
 
-msgid "Run test import"
-msgstr "Run test import"
+msgid "Dry run"
+msgstr "Dry run"
 
-msgid "Send for real"
-msgstr "Send for real"
+msgid "Import"
+msgstr "Import"
 
 msgid "Tracker request failed"
 msgstr "Tracker request failed"
@@ -234,11 +243,11 @@ msgstr "Tracker request failed"
 msgid "An unknown error occurred"
 msgstr "An unknown error occurred"
 
-msgid "Test import found problems"
-msgstr "Test import found problems"
+msgid "Dry run found problems"
+msgstr "Dry run found problems"
 
-msgid "Test import passed"
-msgstr "Test import passed"
+msgid "Dry run passed"
+msgstr "Dry run passed"
 
 msgid "Import failed"
 msgstr "Import failed"
