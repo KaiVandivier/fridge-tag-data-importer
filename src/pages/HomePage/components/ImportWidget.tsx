@@ -274,7 +274,6 @@ export const ImportWidget = ({
                 {hasEvents && (
                     <ButtonStrip>
                         <Button
-                            primary
                             onClick={runTest}
                             loading={
                                 isWorking &&
@@ -283,9 +282,10 @@ export const ImportWidget = ({
                             }
                             disabled={isWorking || commitSucceeded}
                         >
-                            {i18n.t('Run test import')}
+                            {i18n.t('Dry run')}
                         </Button>
                         <Button
+                            primary
                             onClick={runImport}
                             loading={isWorking && validationPassed}
                             disabled={
@@ -294,7 +294,7 @@ export const ImportWidget = ({
                                 commitSucceeded
                             }
                         >
-                            {i18n.t('Send for real')}
+                            {i18n.t('Import')}
                         </Button>
                     </ButtonStrip>
                 )}
@@ -314,8 +314,8 @@ export const ImportWidget = ({
                         report={validationReport}
                         title={
                             validationFailed
-                                ? i18n.t('Test import found problems')
-                                : i18n.t('Test import passed')
+                                ? i18n.t('Dry run found problems')
+                                : i18n.t('Dry run passed')
                         }
                     />
                 )}
