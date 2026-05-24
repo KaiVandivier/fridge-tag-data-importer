@@ -10,6 +10,7 @@ import {
     TableHead,
     TableRow,
     TableRowHead,
+    Tooltip,
 } from '@dhis2/ui'
 import { useMemo, useState } from 'react'
 import styles from './ImportWidget.module.css'
@@ -271,19 +272,10 @@ export const ImportWidget = ({
                     </NoticeBox>
                 )}
 
-                {hasEvents && (
-                    <ButtonStrip>
-                        <Button
-                            onClick={runTest}
-                            loading={
-                                isWorking &&
-                                !commitReport &&
-                                !validationReport
-                            }
-                            disabled={isWorking || commitSucceeded}
-                        >
-                            {i18n.t('Dry run')}
-                        </Button>
+                {hasEvents && (() => {
+                    const needsDryRun =
+                        !validationPassed && !isWorking && !commitSucceeded
+                    const importButton = (
                         <Button
                             primary
                             onClick={runImport}
@@ -296,8 +288,34 @@ export const ImportWidget = ({
                         >
                             {i18n.t('Import')}
                         </Button>
-                    </ButtonStrip>
-                )}
+                    )
+                    return (
+                        <ButtonStrip>
+                            <Button
+                                onClick={runTest}
+                                loading={
+                                    isWorking &&
+                                    !commitReport &&
+                                    !validationReport
+                                }
+                                disabled={isWorking || commitSucceeded}
+                            >
+                                {i18n.t('Dry run')}
+                            </Button>
+                            {needsDryRun ? (
+                                <Tooltip
+                                    content={i18n.t(
+                                        'Complete a dry run before importing'
+                                    )}
+                                >
+                                    {importButton}
+                                </Tooltip>
+                            ) : (
+                                importButton
+                            )}
+                        </ButtonStrip>
+                    )
+                })()}
 
                 {importMutation.error && (
                     <NoticeBox
