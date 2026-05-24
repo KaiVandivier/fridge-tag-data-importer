@@ -17,10 +17,8 @@ import {
     useMappingConfig,
     useSaveMappingConfig,
 } from '@/utils/useMappingConfig'
-import { useProgramAttributes } from '@/utils/useProgramAttributes'
+import { useProgram } from '@/utils/useProgram'
 import { usePrograms } from '@/utils/usePrograms'
-import { useProgramStageDataElements } from '@/utils/useProgramStageDataElements'
-import { useProgramStages } from '@/utils/useProgramStages'
 
 const useDataElementFields = (): Array<{
     key: DataElementFieldKey
@@ -110,20 +108,19 @@ export const MappingPage = () => {
         error: programsError,
     } = usePrograms()
     const {
-        attributes,
-        isLoading: attributesLoading,
-        error: attributesError,
-    } = useProgramAttributes(draftConfig.programId)
-    const {
-        programStages,
-        isLoading: programStagesLoading,
-        error: programStagesError,
-    } = useProgramStages(draftConfig.programId)
-    const {
-        dataElements,
-        isLoading: dataElementsLoading,
-        error: dataElementsError,
-    } = useProgramStageDataElements(draftConfig.programStageId)
+        program,
+        isLoading: programLoading,
+        error: programError,
+    } = useProgram(draftConfig.programId)
+
+    const attributes = program?.attributes
+    const programStages = program?.programStages
+    const dataElements = useMemo(
+        () =>
+            programStages?.find((s) => s.id === draftConfig.programStageId)
+                ?.dataElements,
+        [programStages, draftConfig.programStageId]
+    )
 
     useEffect(() => {
         if (
@@ -255,85 +252,69 @@ export const MappingPage = () => {
                 </SingleSelectField>
             )}
 
-            {attributesError ? (
+            {programError ? (
                 <NoticeBox
                     error
-                    title={i18n.t('Error loading program attributes')}
+                    title={i18n.t('Error loading program details')}
                 >
-                    {attributesError.message ||
+                    {programError.message ||
                         i18n.t('An unknown error occurred')}
                 </NoticeBox>
             ) : (
-                <SingleSelectField
-                    label={i18n.t('Fridge-tag identifier')}
-                    filterable
-                    disabled={!draftConfig.programId}
-                    loading={attributesLoading}
-                    noMatchText={i18n.t('No matches found')}
-                    selected={
-                        attributes?.some(
-                            (a) => a.id === draftConfig.attributeId
-                        )
-                            ? draftConfig.attributeId
-                            : ''
-                    }
-                    onChange={({ selected }) =>
-                        handleAttributeChange(selected)
-                    }
-                >
-                    {attributes?.map((attribute) => (
-                        <SingleSelectOption
-                            key={attribute.id}
-                            label={attribute.displayName}
-                            value={attribute.id}
-                        />
-                    ))}
-                </SingleSelectField>
-            )}
+                <>
+                    <SingleSelectField
+                        label={i18n.t('Fridge-tag identifier')}
+                        filterable
+                        disabled={!draftConfig.programId}
+                        loading={programLoading}
+                        noMatchText={i18n.t('No matches found')}
+                        selected={
+                            attributes?.some(
+                                (a) => a.id === draftConfig.attributeId
+                            )
+                                ? draftConfig.attributeId
+                                : ''
+                        }
+                        onChange={({ selected }) =>
+                            handleAttributeChange(selected)
+                        }
+                    >
+                        {attributes?.map((attribute) => (
+                            <SingleSelectOption
+                                key={attribute.id}
+                                label={attribute.displayName}
+                                value={attribute.id}
+                            />
+                        ))}
+                    </SingleSelectField>
 
-            {programStagesError ? (
-                <NoticeBox
-                    error
-                    title={i18n.t('Error loading program stages')}
-                >
-                    {programStagesError.message ||
-                        i18n.t('An unknown error occurred')}
-                </NoticeBox>
-            ) : (
-                <SingleSelectField
-                    label={i18n.t('Temperature reading program stage')}
-                    filterable
-                    disabled={!draftConfig.programId}
-                    loading={programStagesLoading}
-                    noMatchText={i18n.t('No matches found')}
-                    selected={
-                        programStages?.some(
-                            (s) => s.id === draftConfig.programStageId
-                        )
-                            ? draftConfig.programStageId
-                            : ''
-                    }
-                    onChange={({ selected }) =>
-                        handleProgramStageChange(selected)
-                    }
-                >
-                    {programStages?.map((programStage) => (
-                        <SingleSelectOption
-                            key={programStage.id}
-                            label={programStage.displayName}
-                            value={programStage.id}
-                        />
-                    ))}
-                </SingleSelectField>
-            )}
+                    <SingleSelectField
+                        label={i18n.t('Temperature reading program stage')}
+                        filterable
+                        disabled={!draftConfig.programId}
+                        loading={programLoading}
+                        noMatchText={i18n.t('No matches found')}
+                        selected={
+                            programStages?.some(
+                                (s) => s.id === draftConfig.programStageId
+                            )
+                                ? draftConfig.programStageId
+                                : ''
+                        }
+                        onChange={({ selected }) =>
+                            handleProgramStageChange(selected)
+                        }
+                    >
+                        {programStages?.map((programStage) => (
+                            <SingleSelectOption
+                                key={programStage.id}
+                                label={programStage.displayName}
+                                value={programStage.id}
+                            />
+                        ))}
+                    </SingleSelectField>
 
-            {dataElementsError ? (
-                <NoticeBox error title={i18n.t('Error loading data elements')}>
-                    {dataElementsError.message ||
-                        i18n.t('An unknown error occurred')}
-                </NoticeBox>
-            ) : (
-                dataElementFields.map(({ key, label }) => {
+                    {dataElementFields.map(({ key, label }) => {
                     const selectedId = draftConfig.dataElementIds[key]
                     const selectedByOthers = new Set(
                         dataElementFields
@@ -356,7 +337,7 @@ export const MappingPage = () => {
                             label={label}
                             filterable
                             disabled={!draftConfig.programStageId}
-                            loading={dataElementsLoading}
+                            loading={programLoading}
                             noMatchText={i18n.t('No matches found')}
                             selected={
                                 availableDataElements?.some(
@@ -378,7 +359,8 @@ export const MappingPage = () => {
                             ))}
                         </SingleSelectField>
                     )
-                })
+                    })}
+                </>
             )}
 
             <ActionBar
