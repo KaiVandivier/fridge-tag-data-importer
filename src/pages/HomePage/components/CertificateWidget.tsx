@@ -1,10 +1,5 @@
 import i18n from '@dhis2/d2-i18n'
-import {
-    Button,
-    IconCheckmark16,
-    IconCopy16,
-    IconLock16,
-} from '@dhis2/ui'
+import { Button, IconCheckmark16, IconCopy16, IconLock16 } from '@dhis2/ui'
 import { useState } from 'react'
 import styles from './CertificateWidget.module.css'
 import { Widget } from '@/components/Widget/Widget'
@@ -65,9 +60,7 @@ const HexBlock = ({ label, value }: FieldProps) => {
                     small
                     secondary
                     onClick={handleCopy}
-                    icon={
-                        copied ? <IconCheckmark16 /> : <IconCopy16 />
-                    }
+                    icon={copied ? <IconCheckmark16 /> : <IconCopy16 />}
                 >
                     {copied ? i18n.t('Copied') : i18n.t('Copy')}
                 </Button>

@@ -16,10 +16,7 @@ import { useMemo, useState } from 'react'
 import styles from './ImportWidget.module.css'
 import { Widget } from '@/components/Widget/Widget'
 import type { FridgeTagReport } from '@/types/fridgeTag'
-import {
-    buildImportPlan,
-    type ImportPlan,
-} from '@/utils/buildEventsPayload'
+import { buildImportPlan, type ImportPlan } from '@/utils/buildEventsPayload'
 import type { EnrollmentEvent } from '@/utils/useFindTrackedEntity'
 import type { MappingConfig } from '@/utils/useMappingConfig'
 import {
@@ -54,21 +51,11 @@ const StatsTable = ({ report }: { report: TrackerImportReport }) => {
             <Table suppressZebraStriping>
                 <TableHead>
                     <TableRowHead>
-                        <TableCellHead dense>
-                            {i18n.t('Created')}
-                        </TableCellHead>
-                        <TableCellHead dense>
-                            {i18n.t('Updated')}
-                        </TableCellHead>
-                        <TableCellHead dense>
-                            {i18n.t('Deleted')}
-                        </TableCellHead>
-                        <TableCellHead dense>
-                            {i18n.t('Ignored')}
-                        </TableCellHead>
-                        <TableCellHead dense>
-                            {i18n.t('Total')}
-                        </TableCellHead>
+                        <TableCellHead dense>{i18n.t('Created')}</TableCellHead>
+                        <TableCellHead dense>{i18n.t('Updated')}</TableCellHead>
+                        <TableCellHead dense>{i18n.t('Deleted')}</TableCellHead>
+                        <TableCellHead dense>{i18n.t('Ignored')}</TableCellHead>
+                        <TableCellHead dense>{i18n.t('Total')}</TableCellHead>
                     </TableRowHead>
                 </TableHead>
                 <TableBody>
@@ -272,56 +259,54 @@ export const ImportWidget = ({
                     </NoticeBox>
                 )}
 
-                {hasEvents && (() => {
-                    const needsDryRun =
-                        !validationPassed && !isWorking && !commitSucceeded
-                    const importButton = (
-                        <Button
-                            primary
-                            onClick={runImport}
-                            loading={isWorking && validationPassed}
-                            disabled={
-                                isWorking ||
-                                !validationPassed ||
-                                commitSucceeded
-                            }
-                        >
-                            {i18n.t('Import')}
-                        </Button>
-                    )
-                    return (
-                        <ButtonStrip>
+                {hasEvents &&
+                    (() => {
+                        const needsDryRun =
+                            !validationPassed && !isWorking && !commitSucceeded
+                        const importButton = (
                             <Button
-                                onClick={runTest}
-                                loading={
-                                    isWorking &&
-                                    !commitReport &&
-                                    !validationReport
+                                primary
+                                onClick={runImport}
+                                loading={isWorking && validationPassed}
+                                disabled={
+                                    isWorking ||
+                                    !validationPassed ||
+                                    commitSucceeded
                                 }
-                                disabled={isWorking || commitSucceeded}
                             >
-                                {i18n.t('Dry run')}
+                                {i18n.t('Import')}
                             </Button>
-                            {needsDryRun ? (
-                                <Tooltip
-                                    content={i18n.t(
-                                        'Complete a dry run before importing'
-                                    )}
+                        )
+                        return (
+                            <ButtonStrip>
+                                <Button
+                                    onClick={runTest}
+                                    loading={
+                                        isWorking &&
+                                        !commitReport &&
+                                        !validationReport
+                                    }
+                                    disabled={isWorking || commitSucceeded}
                                 >
-                                    {importButton}
-                                </Tooltip>
-                            ) : (
-                                importButton
-                            )}
-                        </ButtonStrip>
-                    )
-                })()}
+                                    {i18n.t('Dry run')}
+                                </Button>
+                                {needsDryRun ? (
+                                    <Tooltip
+                                        content={i18n.t(
+                                            'Complete a dry run before importing'
+                                        )}
+                                    >
+                                        {importButton}
+                                    </Tooltip>
+                                ) : (
+                                    importButton
+                                )}
+                            </ButtonStrip>
+                        )
+                    })()}
 
                 {importMutation.error && (
-                    <NoticeBox
-                        error
-                        title={i18n.t('Tracker request failed')}
-                    >
+                    <NoticeBox error title={i18n.t('Tracker request failed')}>
                         {importMutation.error.message ||
                             i18n.t('An unknown error occurred')}
                     </NoticeBox>

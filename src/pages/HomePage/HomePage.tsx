@@ -1,9 +1,5 @@
 import i18n from '@dhis2/d2-i18n'
-import {
-    Button,
-    FileInput,
-    NoticeBox,
-} from '@dhis2/ui'
+import { Button, FileInput, NoticeBox } from '@dhis2/ui'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { CertificateWidget } from './components/CertificateWidget'
@@ -13,10 +9,7 @@ import { ImportWidget } from './components/ImportWidget'
 import { MatchedTrackedEntityWidget } from './components/MatchedTrackedEntityWidget'
 import styles from './HomePage.module.css'
 import type { FridgeTagReport } from '@/types/fridgeTag'
-import {
-    parseFridgeTagText,
-    readFileAsText,
-} from '@/utils/parseFridgeTagFile'
+import { parseFridgeTagText, readFileAsText } from '@/utils/parseFridgeTagFile'
 import { useFindTrackedEntity } from '@/utils/useFindTrackedEntity'
 import {
     isMappingConfigComplete,
@@ -70,7 +63,7 @@ export const HomePage = () => {
             setError(
                 err instanceof Error
                     ? err.message
-                    : i18n.t('Failed to parse the report file'),
+                    : i18n.t('Failed to parse the report file')
             )
         } finally {
             setBusy(false)
@@ -98,18 +91,15 @@ export const HomePage = () => {
                 </h1>
                 <p className={styles.subtitle}>
                     {i18n.t(
-                        'Upload a Berlinger Fridge-tag text report to inspect the daily temperature history, alarms, and device configuration.',
+                        'Upload a Berlinger Fridge-tag text report to inspect the daily temperature history, alarms, and device configuration.'
                     )}
                 </p>
             </header>
 
             {!isLoadingMapping && !isMappingComplete && (
-                <NoticeBox
-                    warning
-                    title={i18n.t('Mapping not configured')}
-                >
+                <NoticeBox warning title={i18n.t('Mapping not configured')}>
                     {i18n.t(
-                        'The mapping configuration is incomplete, so reports cannot be matched to tracked entities or imported. Configure all required mappings on the Mapping page to enable these features.',
+                        'The mapping configuration is incomplete, so reports cannot be matched to tracked entities or imported. Configure all required mappings on the Mapping page to enable these features.'
                     )}{' '}
                     <Link to="/mapping">{i18n.t('Go to Mapping')}</Link>
                 </NoticeBox>
@@ -164,9 +154,7 @@ export const HomePage = () => {
                         mapping={mappingConfig}
                         enrollmentId={enrollment.enrollment}
                         trackedEntityId={trackedEntity.trackedEntity}
-                        orgUnitId={
-                            enrollment.orgUnit ?? trackedEntity.orgUnit
-                        }
+                        orgUnitId={enrollment.orgUnit ?? trackedEntity.orgUnit}
                         existingEvents={existingEvents}
                     />
                 )}
@@ -188,7 +176,7 @@ export const HomePage = () => {
             {!report && !error && !busy && (
                 <NoticeBox title={i18n.t('No report loaded')}>
                     {i18n.t(
-                        'Choose a .txt file exported from a Berlinger Fridge-tag device to begin.',
+                        'Choose a .txt file exported from a Berlinger Fridge-tag device to begin.'
                     )}
                 </NoticeBox>
             )}

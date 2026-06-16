@@ -4,11 +4,7 @@ import cx from 'classnames'
 import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import styles from './Sidebar.module.css'
-import {
-    Sidenav,
-    SidenavItems,
-    SidenavLink,
-} from './sidenav'
+import { Sidenav, SidenavItems, SidenavLink } from './sidenav'
 
 type LinkItem = { to: string; label: string }
 
@@ -34,7 +30,11 @@ export const Sidebar = ({
         >
             <Sidenav>
                 <SidenavItems>
-                    <SidebarNavLink to="/" label={i18n.t('Upload report')} end />
+                    <SidebarNavLink
+                        to="/"
+                        label={i18n.t('Upload report')}
+                        end
+                    />
                     <SidebarNavLink to="/mapping" label={i18n.t('Mapping')} />
                 </SidenavItems>
             </Sidenav>

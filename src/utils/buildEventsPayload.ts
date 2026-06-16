@@ -56,18 +56,14 @@ const sumAlarmMinutes = (
         .filter((a) => a.type === type)
         .reduce((sum, a) => sum + (a.accumulatedMinutes ?? 0), 0)
 
-const lowestColdLimit = (
-    thresholds: AlarmThreshold[]
-): number | null => {
+const lowestColdLimit = (thresholds: AlarmThreshold[]): number | null => {
     const limits = thresholds
         .filter((t) => t.type === 'cold' && t.temperatureLimit !== null)
         .map((t) => t.temperatureLimit as number)
     return limits.length ? Math.min(...limits) : null
 }
 
-const highestHotLimit = (
-    thresholds: AlarmThreshold[]
-): number | null => {
+const highestHotLimit = (thresholds: AlarmThreshold[]): number | null => {
     const limits = thresholds
         .filter((t) => t.type === 'hot' && t.temperatureLimit !== null)
         .map((t) => t.temperatureLimit as number)

@@ -1,10 +1,6 @@
 import { useAlert, useDataEngine } from '@dhis2/app-runtime'
 import i18n from '@dhis2/d2-i18n'
-import {
-    useMutation,
-    useQuery,
-    useQueryClient,
-} from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 const NAMESPACE = 'fridge-tag-app'
 const KEY = 'mapping'

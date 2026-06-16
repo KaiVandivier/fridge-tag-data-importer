@@ -1,4 +1,6 @@
-export type PossiblyDynamic<Type, InputType> = Type | ((input: InputType) => Type)
+export type PossiblyDynamic<Type, InputType> =
+    | Type
+    | ((input: InputType) => Type)
 export type QueryVariables = Record<string, unknown>
 
 type QueryParameterSingularValue = string | number | boolean

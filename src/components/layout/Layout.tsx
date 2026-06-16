@@ -11,7 +11,7 @@ export type RouteHandle = {
 
 export const Layout = () => {
     const collapseSidebar = useMatches().some(
-        (match) => (match.handle as RouteHandle)?.collapseSidebar,
+        (match) => (match.handle as RouteHandle)?.collapseSidebar
     )
 
     // Start fetching the mapping config at app load; pages reuse the cached result.

@@ -126,10 +126,7 @@ export const MappingPage = () => {
     )
 
     useEffect(() => {
-        if (
-            programStages?.length === 1 &&
-            !draftConfig.programStageId
-        ) {
+        if (programStages?.length === 1 && !draftConfig.programStageId) {
             const onlyStageId = programStages[0].id
             setDraftConfig((prev) => ({
                 ...prev,
@@ -165,10 +162,7 @@ export const MappingPage = () => {
         }))
     }
 
-    const handleDataElementChange = (
-        key: DataElementFieldKey,
-        id: string
-    ) => {
+    const handleDataElementChange = (key: DataElementFieldKey, id: string) => {
         setDraftConfig((prev) => ({
             ...prev,
             dataElementIds: { ...prev.dataElementIds, [key]: id },
@@ -332,55 +326,55 @@ export const MappingPage = () => {
                     </SingleSelectField>
 
                     {dataElementFields.map(({ key, label }) => {
-                    const selectedId = draftConfig.dataElementIds[key]
-                    const selectedByOthers = new Set(
-                        dataElementFields
-                            .filter((field) => field.key !== key)
-                            .map(
-                                (field) =>
-                                    draftConfig.dataElementIds[field.key]
-                            )
-                            .filter(Boolean)
-                    )
-                    const availableDataElements = dataElements?.filter(
-                        (dataElement) =>
-                            !selectedByOthers.has(dataElement.id) ||
-                            dataElement.id === selectedId
-                    )
-
-                    return (
-                        <SingleSelectField
-                            key={key}
-                            label={label}
-                            placeholder={
-                                draftConfig.programStageId
-                                    ? i18n.t('Select a data element')
-                                    : i18n.t('Select a program stage first')
-                            }
-                            filterable
-                            disabled={!draftConfig.programStageId}
-                            loading={programLoading}
-                            noMatchText={i18n.t('No matches found')}
-                            selected={
-                                availableDataElements?.some(
-                                    (de) => de.id === selectedId
+                        const selectedId = draftConfig.dataElementIds[key]
+                        const selectedByOthers = new Set(
+                            dataElementFields
+                                .filter((field) => field.key !== key)
+                                .map(
+                                    (field) =>
+                                        draftConfig.dataElementIds[field.key]
                                 )
-                                    ? selectedId
-                                    : ''
-                            }
-                            onChange={({ selected }) =>
-                                handleDataElementChange(key, selected)
-                            }
-                        >
-                            {availableDataElements?.map((dataElement) => (
-                                <SingleSelectOption
-                                    key={dataElement.id}
-                                    label={dataElement.displayName}
-                                    value={dataElement.id}
-                                />
-                            ))}
-                        </SingleSelectField>
-                    )
+                                .filter(Boolean)
+                        )
+                        const availableDataElements = dataElements?.filter(
+                            (dataElement) =>
+                                !selectedByOthers.has(dataElement.id) ||
+                                dataElement.id === selectedId
+                        )
+
+                        return (
+                            <SingleSelectField
+                                key={key}
+                                label={label}
+                                placeholder={
+                                    draftConfig.programStageId
+                                        ? i18n.t('Select a data element')
+                                        : i18n.t('Select a program stage first')
+                                }
+                                filterable
+                                disabled={!draftConfig.programStageId}
+                                loading={programLoading}
+                                noMatchText={i18n.t('No matches found')}
+                                selected={
+                                    availableDataElements?.some(
+                                        (de) => de.id === selectedId
+                                    )
+                                        ? selectedId
+                                        : ''
+                                }
+                                onChange={({ selected }) =>
+                                    handleDataElementChange(key, selected)
+                                }
+                            >
+                                {availableDataElements?.map((dataElement) => (
+                                    <SingleSelectOption
+                                        key={dataElement.id}
+                                        label={dataElement.displayName}
+                                        value={dataElement.id}
+                                    />
+                                ))}
+                            </SingleSelectField>
+                        )
                     })}
                 </>
             )}

@@ -1,7 +1,15 @@
 html {
-    --sidenav-dark-bg: #151B23;
-    --sidenav-dark-bg-hover: color-mix(in srgb, var(--sidenav-dark-bg), white 10%);
-    --sidenav-dark-bg-selected: color-mix(in srgb, var(--sidenav-dark-bg), white 5%);
+    --sidenav-dark-bg: #151b23;
+    --sidenav-dark-bg-hover: color-mix(
+        in srgb,
+        var(--sidenav-dark-bg),
+        white 10%
+    );
+    --sidenav-dark-bg-selected: color-mix(
+        in srgb,
+        var(--sidenav-dark-bg),
+        white 5%
+    );
 }
 
 .sidenavWrap {

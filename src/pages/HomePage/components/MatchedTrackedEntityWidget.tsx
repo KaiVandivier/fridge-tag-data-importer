@@ -57,7 +57,7 @@ export const MatchedTrackedEntityWidget = ({
                     title={i18n.t('No tracked entity matched this serial')}
                 >
                     {i18n.t(
-                        'No tracked entity was found in the configured program with an identifier attribute matching the device serial number.',
+                        'No tracked entity was found in the configured program with an identifier attribute matching the device serial number.'
                     )}
                 </NoticeBox>
             )}

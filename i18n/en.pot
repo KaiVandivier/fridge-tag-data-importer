@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2026-05-24T11:01:42.340Z\n"
-"PO-Revision-Date: 2026-05-24T11:01:42.341Z\n"
+"POT-Creation-Date: 2026-05-24T11:20:22.345Z\n"
+"PO-Revision-Date: 2026-05-24T11:20:22.347Z\n"
 
 msgid "Upload report"
 msgstr "Upload report"
@@ -231,11 +231,14 @@ msgstr "Nothing to import"
 msgid "No daily records in this report can be turned into events."
 msgstr "No daily records in this report can be turned into events."
 
+msgid "Import"
+msgstr "Import"
+
 msgid "Dry run"
 msgstr "Dry run"
 
-msgid "Import"
-msgstr "Import"
+msgid "Complete a dry run before importing"
+msgstr "Complete a dry run before importing"
 
 msgid "Tracker request failed"
 msgstr "Tracker request failed"

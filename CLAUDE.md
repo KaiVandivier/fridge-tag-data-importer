@@ -25,6 +25,7 @@ There are two pages, both behind a hash router and a shared sidebar layout:
 2. **Mapping** ([src/pages/MappingPage/](src/pages/MappingPage/), route `/mapping`) — selects the Tracker program, the tracked-entity attribute that holds the Fridge-tag serial, the program stage for daily readings, and the data elements for each measurement (avg/min/max temp, lower/upper alarm limits, total low/high alarm time, events). The config is persisted to the user's dataStore under namespace `fridge-tag-app`, key `mapping` — see [src/utils/useMappingConfig.ts](src/utils/useMappingConfig.ts). The app auto-creates an empty config on first load (404 → POST).
 
 The import pipeline lives in [src/utils/buildEventsPayload.ts](src/utils/buildEventsPayload.ts) and [src/utils/useTrackerImport.ts](src/utils/useTrackerImport.ts):
+
 - `buildImportPlan` turns each `DailyRecord` with a non-null date into a `TrackerEvent` (status `COMPLETED`). Records with no date are skipped. If an existing event with the same `occurredAt` date already exists on the enrollment, its UID is reused so the import becomes an overwrite instead of a duplicate insert.
 - `useTrackerImport` calls `POST /tracker` with `importMode=VALIDATE` (dry-run) or `COMMIT`, `importStrategy=CREATE_AND_UPDATE`, `atomicMode=ALL`. The endpoint returns its import report in a 409 response body on validation failure; the hook unwraps `FetchError.details` so the UI can render error/warning breakdowns instead of a generic error.
 - The `ImportWidget` enforces a successful dry-run before the commit button activates.
@@ -65,4 +66,4 @@ CSS Modules (`*.module.css`) typed via [types/modules.d.ts](types/modules.d.ts).
 
 ## Verification
 
-After making changes, run `pnpm exec eslint .` and `pnpm exec tsc --noEmit` to catch errors early. No output means no errors. The Jest suite is currently a single fixture-driven parser test ([src/utils/__tests__/parseFridgeTagFile.test.ts](src/utils/__tests__/parseFridgeTagFile.test.ts) backed by [sample-fridge-tag.txt](src/utils/__tests__/fixtures/sample-fridge-tag.txt)) — if you change the parser or [FridgeTagReport](src/types/fridgeTag.ts), update the fixture-based assertions accordingly.
+After making changes, run `pnpm exec eslint .` and `pnpm exec tsc --noEmit` to catch errors early. No output means no errors. The Jest suite is currently a single fixture-driven parser test ([src/utils/**tests**/parseFridgeTagFile.test.ts](src/utils/__tests__/parseFridgeTagFile.test.ts) backed by [sample-fridge-tag.txt](src/utils/__tests__/fixtures/sample-fridge-tag.txt)) — if you change the parser or [FridgeTagReport](src/types/fridgeTag.ts), update the fixture-based assertions accordingly.

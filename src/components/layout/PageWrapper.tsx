@@ -19,14 +19,16 @@ const style: React.CSSProperties = {
 
 export const PageWrapper = ({ children, maxWidth }: PageWrapperProps) => {
     const fullWidthRoute = useMatches().some(
-        (match) => !!(match.handle as RouteHandle)?.fullWidth,
+        (match) => !!(match.handle as RouteHandle)?.fullWidth
     )
 
     return (
         <div
             style={{
                 ...style,
-                maxInlineSize: fullWidthRoute ? 'none' : maxWidth || defaultMaxWidth,
+                maxInlineSize: fullWidthRoute
+                    ? 'none'
+                    : maxWidth || defaultMaxWidth,
                 inlineSize: '100%',
             }}
         >

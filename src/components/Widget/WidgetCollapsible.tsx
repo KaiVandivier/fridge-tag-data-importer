@@ -20,7 +20,7 @@ export const WidgetCollapsible = ({
     const [animationsReady, setAnimationsReadyStatus] = useState(false)
     const [postEffectOpen, setPostEffectOpenStatus] = useState(open)
     const hideChildrenTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
-        null,
+        null
     )
     const initialRenderRef = useRef(true)
 
@@ -37,7 +37,7 @@ export const WidgetCollapsible = ({
         setPostEffectOpenStatus(open)
 
         clearTimeout(
-            hideChildrenTimeoutRef.current as ReturnType<typeof setTimeout>,
+            hideChildrenTimeoutRef.current as ReturnType<typeof setTimeout>
         )
         if (open) {
             setChildrenVisibility(true)

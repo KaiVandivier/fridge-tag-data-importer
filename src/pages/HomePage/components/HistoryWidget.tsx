@@ -26,7 +26,7 @@ const hasAnyAlarm = (record: DailyRecord) =>
     record.alarms.some(
         (a) =>
             (a.eventCount !== null && a.eventCount > 0) ||
-            (a.accumulatedMinutes !== null && a.accumulatedMinutes > 0),
+            (a.accumulatedMinutes !== null && a.accumulatedMinutes > 0)
     )
 
 export const HistoryWidget = ({ history }: HistoryWidgetProps) => (
@@ -112,15 +112,13 @@ export const HistoryWidget = ({ history }: HistoryWidgetProps) => (
                                                 (a) =>
                                                     (a.eventCount ?? 0) > 0 ||
                                                     (a.accumulatedMinutes ??
-                                                        0) > 0,
+                                                        0) > 0
                                             )
                                             .map((a) => (
                                                 <Tag
                                                     key={a.level}
                                                     negative={a.type === 'hot'}
-                                                    positive={
-                                                        a.type === 'cold'
-                                                    }
+                                                    positive={a.type === 'cold'}
                                                 >
                                                     {a.type === 'hot'
                                                         ? i18n.t(
@@ -133,7 +131,7 @@ export const HistoryWidget = ({ history }: HistoryWidgetProps) => (
                                                                   mins:
                                                                       a.accumulatedMinutes ??
                                                                       0,
-                                                              },
+                                                              }
                                                           )
                                                         : i18n.t(
                                                               'Cold L{{level}} · {{count}}× · {{mins}}m',
@@ -145,7 +143,7 @@ export const HistoryWidget = ({ history }: HistoryWidgetProps) => (
                                                                   mins:
                                                                       a.accumulatedMinutes ??
                                                                       0,
-                                                              },
+                                                              }
                                                           )}
                                                 </Tag>
                                             ))}

@@ -11,7 +11,7 @@ type Props = {
         event:
             | React.KeyboardEvent<HTMLButtonElement>
             | React.MouseEvent<HTMLButtonElement>
-            | React.TouchEvent<HTMLButtonElement>,
+            | React.TouchEvent<HTMLButtonElement>
     ) => void
 }
 
