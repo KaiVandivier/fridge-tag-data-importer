@@ -5,6 +5,7 @@ import { Layout } from '@/components/layout/Layout'
 import { PageWrapper } from '@/components/layout/PageWrapper'
 import { HomePage } from '@/pages/HomePage/HomePage'
 import { MappingPage } from '@/pages/MappingPage/MappingPage'
+import { RegisterAppliancePage } from '@/pages/RegisterAppliancePage/RegisterAppliancePage'
 import { SyncUrlWithGlobalShell } from '@/utils/SyncUrlWithGlobalShell'
 
 const queryClient = new QueryClient()
@@ -24,6 +25,10 @@ const router = createHashRouter([
                         ),
                         children: [
                             { path: '/', element: <HomePage /> },
+                            {
+                                path: '/register',
+                                element: <RegisterAppliancePage />,
+                            },
                             { path: '/mapping', element: <MappingPage /> },
                         ],
                     },

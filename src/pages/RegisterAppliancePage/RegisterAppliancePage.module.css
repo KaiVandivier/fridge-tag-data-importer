@@ -1,0 +1,80 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacers-dp24);
+}
+
+.headerRow {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--spacers-dp16);
+    padding-block: var(--spacers-dp8);
+    border-block-end: 1px solid var(--colors-grey300);
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacers-dp4);
+}
+
+.title {
+    margin: 0;
+    color: var(--colors-grey900);
+    font-size: 22px;
+}
+
+.subtitle {
+    margin: 0;
+    color: var(--colors-grey700);
+    font-size: 14px;
+    max-width: 720px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacers-dp24);
+    max-width: 600px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacers-dp8);
+}
+
+.fieldLabel {
+    color: var(--colors-grey900);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.orgUnitTree {
+    border: 1px solid var(--colors-grey400);
+    border-radius: 3px;
+    padding: var(--spacers-dp8);
+    min-block-size: 200px;
+    max-block-size: 320px;
+    overflow-y: auto;
+}
+
+.selectedOrgUnit {
+    color: var(--colors-grey700);
+    font-size: 13px;
+}
+
+.actionBar {
+    display: flex;
+    justify-content: flex-end;
+    padding-block-start: var(--spacers-dp8);
+    border-block-start: 1px solid var(--colors-grey300);
+}
+
+.loadingContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-block-size: 200px;
+}

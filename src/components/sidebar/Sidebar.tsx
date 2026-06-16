@@ -35,6 +35,10 @@ export const Sidebar = ({
                         label={i18n.t('Upload report')}
                         end
                     />
+                    <SidebarNavLink
+                        to="/register"
+                        label={i18n.t('Register new appliance')}
+                    />
                     <SidebarNavLink to="/mapping" label={i18n.t('Mapping')} />
                 </SidenavItems>
             </Sidenav>
